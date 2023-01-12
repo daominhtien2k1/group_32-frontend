@@ -1,18 +1,32 @@
-import './App.sass';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import HomeScreen from "./screens/home/HomeScreen";
-function App() {
+import { useSelector } from 'react-redux';
+
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
+
+// routing
+import Routes from 'routes';
+
+// defaultTheme
+import themes from 'themes';
+
+// project imports
+import NavigationScroll from 'layout/NavigationScroll';
+
+// ==============================|| APP ||============================== //
+
+const App = () => {
+    const customization = useSelector((state) => state.customization);
+
     return (
-        <BrowserRouter>
-            <div className="app">
-                <div className="container">
-                    <Routes>
-                        <Route path="/" element={<HomeScreen/>}></Route>
-                    </Routes>
-                </div>
-            </div>
-        </BrowserRouter>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={themes(customization)}>
+                <CssBaseline />
+                <NavigationScroll>
+                    <Routes />
+                </NavigationScroll>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
-}
+};
 
 export default App;
