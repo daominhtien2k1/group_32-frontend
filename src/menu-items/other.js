@@ -26,6 +26,14 @@ const other = {
             icon: icons.IconHelp,
             external: true,
             target: true
+        },
+        {
+            id: 'building',
+            title: 'Building',
+            type: 'item',
+            url: '/building',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
         }
     ]
 };
