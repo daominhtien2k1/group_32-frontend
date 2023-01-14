@@ -1,3 +1,4 @@
+import EnhancedMuiTable from '../../ui-component/tables/EnhancedMuiTable';
 import CustomMaterialReactTable from '../../ui-component/tables/CustomMaterialReactTable';
 
 // import MUIDataTable from 'mui-datatables';
@@ -18,5 +19,7 @@ import CustomMaterialReactTable from '../../ui-component/tables/CustomMaterialRe
 // const Building = () => <MUIDataTable title={'Employee List'} data={data} columns={columns} options={options} />;
 
 const Building = () => <CustomMaterialReactTable />;
+
+// const Building = () => <EnhancedMuiTable />;
 
 export default Building;
