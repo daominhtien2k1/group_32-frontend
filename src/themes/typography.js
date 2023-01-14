@@ -63,7 +63,7 @@ export default function themeTypography(theme) {
             color: theme.darkTextPrimary
         },
         button: {
-            textTransform: 'capitalize'
+            textTransform: 'none'
         },
         customInput: {
             marginTop: 1,
