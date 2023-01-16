@@ -18,6 +18,8 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const Building = Loadable(lazy(() => import('views/building')));
 const Officer = Loadable(lazy(() => import('views/officer')));
+const Profile = Loadable(lazy(() => import('views/profile')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -93,6 +95,10 @@ const MainRoutes = {
         {
             path: 'officer',
             element: <Officer />
+        },
+        {
+            path: 'profile',
+            element: <Profile />
         }
     ]
 };
