@@ -12,8 +12,8 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Customization from '../Customization';
 import navigation from 'menu-items';
-import { drawerWidth } from 'store/constant';
-import { SET_MENU } from 'store/actions';
+import { drawerWidth } from 'redux/constants/constant';
+import { SET_MENU } from 'redux/actions/actions';
 
 // assets
 import { IconChevronRight } from '@tabler/icons';

@@ -34,6 +34,14 @@ const other = {
             url: '/building',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
+        },
+        {
+            id: 'officer',
+            title: 'Officer',
+            type: 'item',
+            url: '/officer',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
         }
     ]
 };

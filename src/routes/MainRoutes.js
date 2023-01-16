@@ -91,7 +91,7 @@ const MainRoutes = {
             element: <Building />
         },
         {
-            path: 'officier',
+            path: 'officer',
             element: <Officer />
         }
     ]
