@@ -7,6 +7,6 @@ import NotFoundRoutes from './NotFoundRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
-export default function ThemeRoutes() {
-    return useRoutes([MainRoutes, AuthenticationRoutes, NotFoundRoutes]);
+export default function ThemeRoutes({ isAllowed }) {
+    return useRoutes([MainRoutes(isAllowed), AuthenticationRoutes, NotFoundRoutes]);
 }

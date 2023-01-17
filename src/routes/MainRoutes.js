@@ -4,6 +4,8 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
+import ProtectedRoute from './ProtectedRoute';
+
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
@@ -20,9 +22,9 @@ const Building = Loadable(lazy(() => import('views/building')));
 const Officer = Loadable(lazy(() => import('views/officer')));
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const MainRoutes = (isAllowed) => ({
     path: '/',
-    element: <MainLayout />,
+    element: <ProtectedRoute isAllowed={isAllowed} children={<MainLayout />} />,
     children: [
         {
             path: '/',
@@ -95,6 +97,6 @@ const MainRoutes = {
             element: <Officer />
         }
     ]
-};
+});
 
 export default MainRoutes;

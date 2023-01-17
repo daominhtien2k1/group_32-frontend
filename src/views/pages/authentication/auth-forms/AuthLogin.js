@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -7,6 +8,7 @@ import {
     Box,
     Button,
     Checkbox,
+    CircularProgress,
     Divider,
     FormControl,
     FormControlLabel,
@@ -20,26 +22,54 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
+import { Alert } from '@mui/lab';
 
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // project imports
 import useScriptRef from 'hooks/useScriptRef';
-import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-// ============================|| FIREBASE - LOGIN ||============================ //
+import { login } from '../../../../redux/actions/StudentActions';
 
-const FirebaseLogin = ({ ...others }) => {
+// ============================|| LOGIN ||============================ //
+
+const AuthLogin = ({ ...others }) => {
     const theme = useTheme();
     const scriptedRef = useScriptRef();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
+    const studentLogin = useSelector((state) => state.studentLogin);
+    const { error, loading, success, studentInfo } = studentLogin;
+
+    useEffect(() => {
+        if (success) {
+            toast.success('Login success!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined
+            });
+        }
+        if (studentInfo) {
+            navigate('/');
+        }
+    }, [studentInfo, navigate]);
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -48,12 +78,34 @@ const FirebaseLogin = ({ ...others }) => {
         event.preventDefault();
     };
 
+    const handleSubmit = (email, password) => {
+        dispatch(login(email, password));
+        if (error) throw new Error(error);
+    };
+
     return (
         <>
+            {loading && <CircularProgress color="success" />}
+            {error && (
+                <Alert variant="filled" severity="error">
+                    {error}
+                </Alert>
+            )}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+            />
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    email: 'tienvd@gmail.com',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -72,11 +124,10 @@ const FirebaseLogin = ({ ...others }) => {
                         if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
-                            alert(JSON.stringify(values, null, 2));
-                            throw Error('hello');
+                            // alert(JSON.stringify(values, null, 2));
+                            handleSubmit(values.email, values.password);
                         }
                     } catch (err) {
-                        console.error(err);
                         if (scriptedRef.current) {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
@@ -157,11 +208,12 @@ const FirebaseLogin = ({ ...others }) => {
                                 Quên mật khẩu?
                             </Typography>
                         </Stack>
-                        {errors.submit && (
-                            <Box sx={{ mt: 3 }}>
-                                <FormHelperText error>{errors.submit}</FormHelperText>
-                            </Box>
-                        )}
+                        {/* Lỗi ném ra của Formilk bị chậm 1 lần đầu tiên */}
+                        {/*{errors.submit && (*/}
+                        {/*    <Box sx={{ mt: 3 }}>*/}
+                        {/*        <FormHelperText error>{errors.submit}</FormHelperText>*/}
+                        {/*    </Box>*/}
+                        {/*)}*/}
 
                         <Box sx={{ mt: 2 }}>
                             <Button
@@ -183,4 +235,4 @@ const FirebaseLogin = ({ ...others }) => {
     );
 };
 
-export default FirebaseLogin;
+export default AuthLogin;

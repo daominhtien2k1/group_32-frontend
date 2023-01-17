@@ -16,13 +16,15 @@ import NavigationScroll from 'layout/NavigationScroll';
 
 const App = () => {
     const customization = useSelector((state) => state.customization);
+    const studentLogin = useSelector((state) => state.studentLogin);
+    const { studentInfo } = studentLogin;
 
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={themes(customization)}>
                 <CssBaseline />
                 <NavigationScroll>
-                    <Routes />
+                    <Routes isAllowed={!!studentInfo} />
                 </NavigationScroll>
             </ThemeProvider>
         </StyledEngineProvider>
