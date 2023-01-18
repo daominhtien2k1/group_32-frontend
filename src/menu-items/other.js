@@ -29,9 +29,17 @@ const other = {
         },
         {
             id: 'manage-building',
-            title: 'Quản lý khu/phòng',
+            title: 'Quản lý tòa nhà',
             type: 'item',
             url: '/manage-building',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'manage-room-type',
+            title: 'Quản lý loại phòng',
+            type: 'item',
+            url: '/manage-room-type',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },
@@ -45,9 +53,17 @@ const other = {
         },
         {
             id: 'officer',
-            title: 'Officer',
+            title: 'Cán bộ',
             type: 'item',
             url: '/officer',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'manage-officer',
+            title: 'Quản lý cán bộ',
+            type: 'item',
+            url: '/manage-officer',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },

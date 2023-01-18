@@ -23,22 +23,20 @@ import {
 } from '@mui/material';
 // components
 import Label from '../../ui-component/label';
-import Iconify from '../../ui-component/iconify';
-import ImageAvartar from '../../assets/images/avatars/avatar_1.jpg';
+
 // sections
-import { UserListHead, UserListToolbar } from '../../sections/user';
+
 // mock
-import USERLIST from '../../mock/Officier';
+import officerList from '../../mock/Officier';
+import OfficerListToolbar from '../../sections/officer/OfficerListToolbar';
+import OfficerListHead from '../../sections/officer/OfficerListHead';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-    { id: 'name', label: 'Name' },
-    { id: 'company', label: 'Company' },
-    { id: 'role', label: 'Role' },
-    { id: 'isVerified', label: 'Verified' },
-    { id: 'status', label: 'Status' },
-    { id: '' }
+    { id: 'name', label: 'Họ và tên' },
+    { id: 'email', label: 'Email' },
+    { id: 'role', label: 'Vai trò' }
 ];
 
 // ----------------------------------------------------------------------
@@ -71,60 +69,16 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function Officer() {
-    const [open, setOpen] = useState(null);
-
     const [page, setPage] = useState(0);
-
     const [order, setOrder] = useState('asc');
-
-    const [selected, setSelected] = useState([]);
-
     const [orderBy, setOrderBy] = useState('name');
-
     const [filterName, setFilterName] = useState('');
-
     const [rowsPerPage, setRowsPerPage] = useState(5);
-
-    const handleOpenMenu = (event) => {
-        setOpen(event.currentTarget);
-    };
-
-    const handleCloseMenu = () => {
-        setOpen(null);
-    };
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
-    };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = USERLIST.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-        if (selectedIndex === -1) {
-            // nếu mảng cũ chưa có phần tử được clicked
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            // uncheck phần tử đầu của mảng
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            // uncheck phần tử đầu cuối mảng
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            // uncheck phần tử ở giữa mảng
-            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-        }
-        setSelected(newSelected);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -141,47 +95,39 @@ export default function Officer() {
         setFilterName(event.target.value);
     };
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - officerList.length) : 0;
 
-    const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+    const filteredOfficers = applySortFilter(officerList, getComparator(order, orderBy), filterName);
 
-    const isNotFound = !filteredUsers.length && !!filterName;
+    const isNotFound = !filteredOfficers.length && !!filterName;
 
     return (
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
                 <Typography variant="h3" gutterBottom>
-                    Cán bộ quản lý
+                    Danh sách cán bộ có thể trợ giúp
                 </Typography>
                 {/*<Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>*/}
                 {/*    New User*/}
                 {/*</Button>*/}
             </Stack>
 
-            <Card>
-                <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+            <Card sx={{ paddingX: 2 }}>
+                <OfficerListToolbar filterType={filterName} onFilterType={handleFilterByName} />
                 <TableContainer sx={{ minWidth: 800 }}>
                     <Table>
-                        <UserListHead
+                        <OfficerListHead
                             order={order}
                             orderBy={orderBy}
                             headLabel={TABLE_HEAD}
-                            rowCount={USERLIST.length}
-                            numSelected={selected.length}
+                            rowCount={officerList.length}
                             onRequestSort={handleRequestSort}
-                            onSelectAllClick={handleSelectAllClick}
                         />
                         <TableBody>
-                            {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                                const selectedUser = selected.indexOf(name) !== -1;
-
+                            {filteredOfficers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                const { id, name, email, role, avatarUrl } = row;
                                 return (
-                                    <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                                        <TableCell padding="checkbox">
-                                            <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                                        </TableCell>
-
+                                    <TableRow hover key={id} tabIndex={-1}>
                                         <TableCell component="th" scope="row" padding="none">
                                             <Stack direction="row" alignItems="center" spacing={2}>
                                                 <Avatar alt={name} src={require(`../../assets/images/avatars/${avatarUrl}`)} />
@@ -190,22 +136,8 @@ export default function Officer() {
                                                 </Typography>
                                             </Stack>
                                         </TableCell>
-
-                                        <TableCell align="left">{company}</TableCell>
-
+                                        <TableCell align="left">{email}</TableCell>
                                         <TableCell align="left">{role}</TableCell>
-
-                                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-                                        <TableCell align="left">
-                                            <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                                        </TableCell>
-
-                                        <TableCell align="right">
-                                            <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                                <Iconify icon={'eva:more-vertical-fill'} />
-                                            </IconButton>
-                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -245,42 +177,13 @@ export default function Officer() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={USERLIST.length}
+                    count={officerList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Card>
-
-            <Popover
-                open={Boolean(open)}
-                anchorEl={open}
-                onClose={handleCloseMenu}
-                anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                PaperProps={{
-                    sx: {
-                        p: 1,
-                        width: 140,
-                        '& .MuiMenuItem-root': {
-                            px: 1,
-                            typography: 'body2',
-                            borderRadius: 0.75
-                        }
-                    }
-                }}
-            >
-                <MenuItem>
-                    <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-                    Edit
-                </MenuItem>
-
-                <MenuItem sx={{ color: 'error.main' }}>
-                    <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-                    Delete
-                </MenuItem>
-            </Popover>
         </>
     );
 }

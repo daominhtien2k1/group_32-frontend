@@ -15,52 +15,9 @@ import {
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
-const data = [
-    {
-        id: '9s41rp',
-        name: 'B1',
-        floors: '8 tầng',
-        address: 'Số 1 Đại Cồ Việt, phường Bách Khoa, quận Hai Bà Trưng, thành phố Hà Nội'
-    },
-    {
-        id: '7s49rp',
-        name: 'B3',
-        floors: '10 tầng',
-        address: 'Số 2 Đại Cồ Việt, phường Bách Khoa, quận Hai Bà Trưng, thành phố Hà Nội'
-    },
-    {
-        id: '8s49rp',
-        name: 'B5',
-        floors: '6 tầng',
-        address: 'Số 3 Đại Cồ Việt, phường Bách Khoa, quận Hai Bà Trưng, thành phố Hà Nội'
-    },
-    {
-        id: '8k49rp',
-        name: 'B5B',
-        floors: '8 tầng',
-        address: 'Số 4 Đại Cồ Việt, phường Bách Khoa, quận Hai Bà Trưng, thành phố Hà Nội'
-    }
-];
-//50 us states array
-const floors = [
-    '1 tầng',
-    '2 tầng',
-    '3 tầng',
-    '4 tầng',
-    '5 tầng',
-    '6 tầng',
-    '7 tầng',
-    '8 tầng',
-    '9 tầng',
-    '10 tầng',
-    '11 tầng',
-    '12 tầng',
-    '13 tầng',
-    '14 tầng',
-    '15 tầng'
-];
+import data from '../../mock/Officier';
 
-const BuildingTable = () => {
+const OfficerTable = () => {
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [tableData, setTableData] = useState(() => data);
     const [validationErrors, setValidationErrors] = useState({});
@@ -85,7 +42,7 @@ const BuildingTable = () => {
 
     const handleDeleteRow = useCallback(
         (row) => {
-            if (!confirm(`Bạn có muốn xóa tòa nhà: ${row.getValue('name')}`)) {
+            if (!confirm(`Bạn có muốn xóa cán bộ: ${row.getValue('name')}`)) {
                 return;
             }
             //send api delete request here, then refetch or update local table data for re-render
@@ -98,24 +55,17 @@ const BuildingTable = () => {
     const columns = [
         {
             accessorKey: 'name',
-            header: 'Tên khu kí túc',
+            header: 'Họ và tên',
             size: 140
         },
         {
-            accessorKey: 'floors',
-            header: 'Số tầng',
-            muiTableBodyCellEditTextFieldProps: {
-                select: true, //change to select for a dropdown
-                children: floors.map((floor) => (
-                    <MenuItem key={floor} value={floor}>
-                        {floor}
-                    </MenuItem>
-                ))
-            }
+            accessorKey: 'email',
+            header: 'Email',
+            size: 200
         },
         {
-            accessorKey: 'address',
-            header: 'Địa chỉ',
+            accessorKey: 'role',
+            header: 'Vai trò',
             size: 200
         }
     ];
@@ -154,11 +104,11 @@ const BuildingTable = () => {
                 )}
                 renderTopToolbarCustomActions={() => (
                     <Button color="secondary" onClick={() => setCreateModalOpen(true)} variant="contained">
-                        Thêm tòa nhà
+                        Thêm cán bộ
                     </Button>
                 )}
             />
-            <CreateNewBuildingModal
+            <CreateNewOfficerModal
                 columns={columns}
                 open={createModalOpen}
                 onClose={() => setCreateModalOpen(false)}
@@ -169,7 +119,7 @@ const BuildingTable = () => {
 };
 
 //example of creating a mui dialog modal for creating new rows
-export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => {
+export const CreateNewOfficerModal = ({ open, columns, onClose, onSubmit }) => {
     const [values, setValues] = useState(() =>
         columns.reduce((acc, column) => {
             acc[column.accessorKey ?? ''] = '';
@@ -184,18 +134,9 @@ export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => 
         onClose();
     };
 
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                overflowY: 'scroll',
-                height: '200px'
-            }
-        }
-    };
-
     return (
         <Dialog open={open}>
-            <DialogTitle textAlign="center">Thêm tòa nhà</DialogTitle>
+            <DialogTitle textAlign="center">Thêm cán bộ</DialogTitle>
             <DialogContent>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Stack
@@ -206,32 +147,14 @@ export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => 
                         }}
                     >
                         {columns.map((column) => {
-                            if (column.accessorKey !== 'floors')
-                                return (
-                                    <TextField
-                                        key={column.accessorKey}
-                                        label={column.header}
-                                        name={column.accessorKey}
-                                        onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-                                    />
-                                );
-                            else if (column.accessorKey === 'floors')
-                                return (
-                                    <TextField
-                                        SelectProps={{ MenuProps: MenuProps }}
-                                        key={column.accessorKey}
-                                        label={column.header}
-                                        name={column.accessorKey}
-                                        select
-                                        onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-                                    >
-                                        {floors.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                );
+                            return (
+                                <TextField
+                                    key={column.accessorKey}
+                                    label={column.header}
+                                    name={column.accessorKey}
+                                    onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+                                />
+                            );
                         })}
                     </Stack>
                 </form>
@@ -246,4 +169,4 @@ export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => 
     );
 };
 
-export default BuildingTable;
+export default OfficerTable;

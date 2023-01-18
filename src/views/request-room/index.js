@@ -39,6 +39,7 @@ const TABLE_HEAD = [
     { id: 'name', label: 'Tên phòng' },
     { id: 'beds', label: 'Số giường' },
     { id: 'type', label: 'Loại phòng' },
+    { id: 'genderType', label: 'Kiểu phòng' },
     { id: 'leftBeds', label: 'Số giường còn lại' },
     { id: 'status', label: 'Trạng thái' }
 ];
@@ -66,7 +67,11 @@ function applySortFilter(array, comparator, query) {
     });
     if (query) {
         return filter(array, (_room) => {
-            return _room.type.toLowerCase().indexOf(query.toLowerCase()) !== -1 || query.toLowerCase().includes(_room.beds.toLowerCase());
+            return (
+                _room.type.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+                query.toLowerCase().includes(_room.beds.toLowerCase()) ||
+                query.toLowerCase().includes(_room.genderType.toLowerCase())
+            );
         });
     }
     return stabilizedThis.map((el) => el[0]);
@@ -217,18 +222,18 @@ const RequestRoom = () => {
                         />
                         <TableBody>
                             {filteredRooms.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                const { id, name, beds, type, leftBeds, status } = row;
+                                const { id, name, beds, type, genderType, leftBeds, status } = row;
 
                                 return (
                                     <TableRow hover key={id} tabIndex={-1} role="checkbox">
                                         <TableCell align="left">{name}</TableCell>
                                         <TableCell align="left">{beds} giường</TableCell>
                                         <TableCell align="left">{type}</TableCell>
+                                        <TableCell align="left">{genderType}</TableCell>
                                         <TableCell align="left">{leftBeds} giường</TableCell>
                                         <TableCell align="left">
                                             <Label color={(status === 'Không khả dụng' && 'error') || 'success'}>{status}</Label>
                                         </TableCell>
-
                                         <TableCell align="right">
                                             <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
                                                 <Iconify icon={'eva:more-vertical-fill'} />

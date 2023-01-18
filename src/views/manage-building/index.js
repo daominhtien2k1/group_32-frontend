@@ -34,8 +34,6 @@ import BuildingTable from './BuildingTable';
 
 const ManageBuilding = () => <BuildingTable />;
 
-// const Building = () => <EnhancedMuiTable />;
-
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
 // const MenuProps = {
