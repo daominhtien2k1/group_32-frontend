@@ -28,10 +28,18 @@ const other = {
             target: true
         },
         {
-            id: 'building',
-            title: 'Building',
+            id: 'manage-building',
+            title: 'Quản lý khu/phòng',
             type: 'item',
-            url: '/building',
+            url: '/manage-building',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'request-room',
+            title: 'Đăng kí phòng',
+            type: 'item',
+            url: '/request-room',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },

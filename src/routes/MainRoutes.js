@@ -18,7 +18,8 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
-const Building = Loadable(lazy(() => import('views/building')));
+const ManageBuilding = Loadable(lazy(() => import('views/manage-building')));
+const RequestRoom = Loadable(lazy(() => import('views/request-room')));
 const Officer = Loadable(lazy(() => import('views/officer')));
 const Profile = Loadable(lazy(() => import('views/profile')));
 
@@ -91,8 +92,12 @@ const MainRoutes = (isAllowed) => ({
             element: <SamplePage />
         },
         {
-            path: 'building',
-            element: <Building />
+            path: 'manage-building',
+            element: <ManageBuilding />
+        },
+        {
+            path: 'request-room',
+            element: <RequestRoom />
         },
         {
             path: 'officer',
