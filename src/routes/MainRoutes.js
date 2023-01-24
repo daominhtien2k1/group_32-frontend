@@ -24,7 +24,8 @@ const RequestRoom = Loadable(lazy(() => import('views/request-room')));
 const Officer = Loadable(lazy(() => import('views/officer')));
 const ManageOfficer = Loadable(lazy(() => import('views/manage-officer')));
 const Profile = Loadable(lazy(() => import('views/profile')));
-
+const RoomTypeTable = Loadable(lazy(() => import('views/request-room/RoomTypeTable')));
+const RequestRoomTable = Loadable(lazy(() => import('views/request-room/RequestRoomTable')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = (isAllowed) => ({
@@ -50,21 +51,11 @@ const MainRoutes = (isAllowed) => ({
                 {
                     path: 'util-typography',
                     element: <UtilsTypography />
-                }
-            ]
-        },
-        {
-            path: 'utils',
-            children: [
+                },
                 {
                     path: 'util-color',
                     element: <UtilsColor />
-                }
-            ]
-        },
-        {
-            path: 'utils',
-            children: [
+                },
                 {
                     path: 'util-shadow',
                     element: <UtilsShadow />
@@ -77,12 +68,7 @@ const MainRoutes = (isAllowed) => ({
                 {
                     path: 'tabler-icons',
                     element: <UtilsTablerIcons />
-                }
-            ]
-        },
-        {
-            path: 'icons',
-            children: [
+                },
                 {
                     path: 'material-icons',
                     element: <UtilsMaterialIcons />
@@ -103,7 +89,21 @@ const MainRoutes = (isAllowed) => ({
         },
         {
             path: 'request-room',
-            element: <RequestRoom />
+            element: <RequestRoom />,
+            children: [
+                {
+                    path: '',
+                    element: <RoomTypeTable />
+                },
+                {
+                    path: 'default',
+                    element: <RoomTypeTable />
+                },
+                {
+                    path: ':_buildingId/:floorId',
+                    element: <RequestRoomTable />
+                }
+            ]
         },
         {
             path: 'officer',
