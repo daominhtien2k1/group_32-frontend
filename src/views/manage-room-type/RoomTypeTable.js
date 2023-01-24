@@ -17,6 +17,7 @@ import { Delete, Edit } from '@mui/icons-material';
 
 const data = [
     {
+        id: 'T6A',
         type: 'Phòng thường',
         beds: 6,
         description: 'Phòng 6 bạn, có giường tầng, nhà vệ sinh khép kín',
@@ -25,6 +26,7 @@ const data = [
         price6: 1600000
     },
     {
+        id: 'T6B',
         type: 'Phòng thường, máy lạnh',
         beds: 6,
         description: 'Phòng 6 bạn, giường tầng, nhà vệ sinh khép kín. Trong nhà tắm có trang bị bình nóng lạnh.',
@@ -33,6 +35,7 @@ const data = [
         price6: 2000000
     },
     {
+        id: 'DV6',
         type: 'Phòng dịch vụ',
         beds: 6,
         description: 'Phòng 6 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
@@ -41,6 +44,7 @@ const data = [
         price6: 2800000
     },
     {
+        id: 'DV4',
         type: 'Phòng dịch vụ',
         beds: 4,
         description: 'Phòng 4 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
@@ -49,6 +53,7 @@ const data = [
         price6: 3200000
     },
     {
+        id: 'DV3',
         type: 'Phòng dịch vụ',
         beds: 3,
         description: 'Phòng 3 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
@@ -96,6 +101,11 @@ const RoomTypeTable = () => {
     );
 
     const columns = [
+        {
+            accessorKey: 'id',
+            header: 'ID',
+            size: 100
+        },
         {
             accessorKey: 'type',
             header: 'Loại phòng',

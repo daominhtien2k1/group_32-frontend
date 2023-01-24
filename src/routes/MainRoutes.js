@@ -26,6 +26,9 @@ const ManageOfficer = Loadable(lazy(() => import('views/manage-officer')));
 const Profile = Loadable(lazy(() => import('views/profile')));
 const RoomTypeTable = Loadable(lazy(() => import('views/request-room/RoomTypeTable')));
 const RequestRoomTable = Loadable(lazy(() => import('views/request-room/RequestRoomTable')));
+const RequestList = Loadable(lazy(() => import('views/request-list')));
+const RoomTracking = Loadable(lazy(() => import('views/room-tracking')));
+const ManageRoom = Loadable(lazy(() => import('views/manage-room')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = (isAllowed) => ({
@@ -88,6 +91,14 @@ const MainRoutes = (isAllowed) => ({
             element: <ManageRoomType />
         },
         {
+            path: 'manage-officer',
+            element: <ManageOfficer />
+        },
+        {
+            path: 'manage-room',
+            element: <ManageRoom />
+        },
+        {
             path: 'request-room',
             element: <RequestRoom />,
             children: [
@@ -106,12 +117,16 @@ const MainRoutes = (isAllowed) => ({
             ]
         },
         {
-            path: 'officer',
-            element: <Officer />
+            path: 'request-list',
+            element: <RequestList />
         },
         {
-            path: 'manage-officer',
-            element: <ManageOfficer />
+            path: 'room-tracking',
+            element: <RoomTracking />
+        },
+        {
+            path: 'officer',
+            element: <Officer />
         },
         {
             path: 'profile',

@@ -105,16 +105,16 @@ export default function Officer() {
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
                 <Typography variant="h3" gutterBottom>
-                    Danh sách cán bộ có thể trợ giúp
+                    DANH SÁCH CÁN BỘ CÓ THỂ TRỢ GIÚP
                 </Typography>
                 {/*<Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>*/}
                 {/*    New User*/}
                 {/*</Button>*/}
             </Stack>
 
-            <Card sx={{ paddingX: 2 }}>
+            <Card>
                 <OfficerListToolbar filterType={filterName} onFilterType={handleFilterByName} />
-                <TableContainer sx={{ minWidth: 800 }}>
+                <TableContainer sx={{ minWidth: 800, paddingX: 2 }}>
                     <Table>
                         <OfficerListHead
                             order={order}

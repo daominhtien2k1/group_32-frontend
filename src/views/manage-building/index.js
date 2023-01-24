@@ -2,7 +2,7 @@ import EnhancedMuiTable from '../../ui-component/tables/EnhancedMuiTable';
 import CustomMaterialReactTable from '../../ui-component/tables/CustomMaterialReactTable';
 
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 
 import { gridSpacing } from '../../redux/constants/constant';
 import Box from '@mui/material/Box';
@@ -32,7 +32,18 @@ import BuildingTable from './BuildingTable';
 //
 // const Building = () => <MUIDataTable title={'Employee List'} data={data} columns={columns} options={options} />;
 
-const ManageBuilding = () => <BuildingTable />;
+const ManageBuilding = () => {
+    return (
+        <>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+                <Typography variant="h3" gutterBottom>
+                    QUẢN LÝ TÒA NHÀ
+                </Typography>
+            </Stack>
+            <BuildingTable />;
+        </>
+    );
+};
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;

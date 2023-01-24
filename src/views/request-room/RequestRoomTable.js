@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import {
+    Button,
     Card,
+    CardActions,
+    CardContent,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Grid,
     IconButton,
     Paper,
     Popover,
+    Stack,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TablePagination,
     TableRow,
+    TextField,
     Typography
 } from '@mui/material';
 import RoomListToolbar from '../../sections/room/RoomListToolBar';
@@ -20,6 +30,7 @@ import Iconify from '../../ui-component/iconify';
 import MenuItem from '@mui/material/MenuItem';
 
 import { filter } from 'lodash';
+import { gridSpacing } from '../../redux/constants/constant';
 
 const TABLE_HEAD = [
     { id: 'name', label: 'Tên phòng' },
@@ -66,6 +77,7 @@ function applySortFilter(array, comparator, query) {
 // ==============================|| Request room page||============================== //
 
 const RequestRoomTable = () => {
+    const [detailViewOpen, setDetailViewOpen] = useState(false);
     const [open, setOpen] = useState(null);
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
@@ -202,10 +214,72 @@ const RequestRoomTable = () => {
                     }
                 }}
             >
-                <MenuItem>Xem chi tiết</MenuItem>
+                <MenuItem onClick={() => setDetailViewOpen(true)}>Xem chi tiết</MenuItem>
                 <MenuItem>Đăng kí</MenuItem>
             </Popover>
+
+            <DetailViewModal detailViewOpen={detailViewOpen} onClose={() => setDetailViewOpen(false)} onSubmit={() => {}} />
         </>
+    );
+};
+
+const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
+    const handleSubmit = () => {};
+
+    return (
+        <Dialog open={detailViewOpen}>
+            <DialogTitle variant="h4" textAlign="center">
+                Chi tiết thông tin phòng
+            </DialogTitle>
+            <DialogContent>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={2} md={2}>
+                            <Card variant="outlined" sx={{ minWidth: 450 }}>
+                                <CardContent>
+                                    <Typography mb={1.5} variant="h5" component="div">
+                                        Phòng kí túc xá: 401
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Loại phòng: Phòng dịch vụ
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Kiểu phòng: Nam
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Số người hiện tại: 5
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Số người tối đa: 8
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Mô tả chi tiết: Phòng 6 bạn, có giường tầng, nhà vệ sinh khép kín
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Phí lưu trú 1 tháng: 160000
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Phí lưu trú 3 tháng: 200000
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
+                                        Phí lưu trú 6 tháng: 240000
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        Trạng thái: Khả dụng
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </form>
+            </DialogContent>
+            <DialogActions sx={{ p: '1.25rem' }}>
+                <Button onClick={onClose}>Quay lại</Button>
+                <Button color="secondary" onClick={handleSubmit} variant="contained">
+                    Đăng kí
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 };
 

@@ -8,7 +8,13 @@ const officerList = [...Array(12)].map((_, index) => ({
     avatarUrl: `avatar_${index + 1}.jpg`,
     name: faker.name.fullName(),
     email: faker.internet.email(),
-    role: sample(['Leader', 'Hr Manager', 'UI Designer', 'UX Designer', 'UI/UX Designer'])
+    role: sample([
+        'Giám đốc Trung tâm',
+        'Phó Giám đốc Trung tâm',
+        'Cán bộ Văn phòng Trung tâm',
+        'Hỗ trợ kỹ thuật',
+        'Cán bộ Quản lý tòa nhà'
+    ])
 }));
 
 export default officerList;

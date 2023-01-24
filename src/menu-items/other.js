@@ -44,6 +44,22 @@ const other = {
             breadcrumbs: false
         },
         {
+            id: 'manage-officer',
+            title: 'Quản lý cán bộ',
+            type: 'item',
+            url: '/manage-officer',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'manage-room',
+            title: 'Quản lý phòng',
+            type: 'item',
+            url: '/manage-room',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
             id: 'request-room',
             title: 'Đăng kí phòng',
             type: 'item',
@@ -52,18 +68,26 @@ const other = {
             breadcrumbs: false
         },
         {
-            id: 'officer',
-            title: 'Cán bộ',
+            id: 'request-list',
+            title: 'Xem đăng kí',
             type: 'item',
-            url: '/officer',
+            url: '/request-list',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },
         {
-            id: 'manage-officer',
-            title: 'Quản lý cán bộ',
+            id: 'room-tracking',
+            title: 'Theo dõi phòng',
             type: 'item',
-            url: '/manage-officer',
+            url: '/room-tracking',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'officer',
+            title: 'Cán bộ',
+            type: 'item',
+            url: '/officer',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },
