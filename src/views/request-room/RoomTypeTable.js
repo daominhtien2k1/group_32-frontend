@@ -89,6 +89,12 @@ export const RoomTypeTable = () => {
             />
             <MainCard title="Ghi chú" sx={{ marginTop: 4 }}>
                 <Typography variant="body2" sx={{ color: 'error.main' }}>
+                    - Đợt đăng kí mở vào đầu mỗi tháng. Đợt đăng kí kéo dài 7 ngày. (vd: 1/6/2023 - 7/6/2023)
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'error.main' }}>
+                    - Hạn thanh toán là 7 ngày kể từ ngày đăng kí cuối (vd: 8/6/2023 - 14/6/2023)
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'error.main' }}>
                     - Mức đóng cho các loại phòng chưa bao gồm tiền sử dụng điện, nước và các dịch vụ khác
                 </Typography>
             </MainCard>

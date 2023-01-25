@@ -53,9 +53,9 @@ const other = {
         },
         {
             id: 'manage-room',
-            title: 'Quản lý phòng',
+            title: 'Quản lý hóa đơn',
             type: 'item',
-            url: '/manage-room',
+            url: '/manage-bill',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },

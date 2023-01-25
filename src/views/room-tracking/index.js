@@ -68,17 +68,24 @@ const FriendListTable = () => {
 
 const RoomTracking = () => (
     <>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
             <Typography variant="h3" gutterBottom>
                 THEO DÕI THÔNG TIN PHÒNG
             </Typography>
         </Stack>
         <MainCard title="Ghi chú" sx={{ mb: 3 }}>
             <Typography variant="body2" sx={{ color: 'error.main' }}>
-                - Đóng tiền trọ theo từng gói đăng kí tháng
+                - Đóng tiền trọ theo từng gói đăng kí tháng, 7 ngày kể từ ngày đăng kí cuối (vd: 8/6/2023 - 14/6/2023)
             </Typography>
             <Typography variant="body2" sx={{ color: 'error.main' }}>
-                - Đóng các loại tiền khác như tiền trọ theo hàng tháng
+                - Hạn duy trì phòng là thời gian theo gói đăng kí kể từ ngày đầu tiên đăng kí thành công. Sinh viên chú ý nếu muốn gia hạn
+                thì phải đăng kí tiếp đầu tháng tiếp theo (vd: 1/7/2023 - 7/7/2023)
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'error.main' }}>
+                - Đóng các loại tiền khác như tiền trọ theo hàng tháng, vào tuần cuối của tháng (vd: 23/6/2023 - 30/6/2023)
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'error.main' }}>
+                - Tiền phòng là đóng cá nhân, các loại tiền khác đóng chung theo phòng
             </Typography>
         </MainCard>
         <Grid container spacing={gridSpacing}>
@@ -135,7 +142,7 @@ const RoomTracking = () => (
                     <Card variant="outlined">
                         <CardContent>
                             <Typography mb={1.5} variant="h3" component="div">
-                                Các khoản phí trong tháng
+                                Các khoản phí trong tháng (chung cả phòng)
                             </Typography>
                             <Card variant="outlined">
                                 <CardContent>
@@ -156,7 +163,7 @@ const RoomTracking = () => (
                             <Card variant="outlined" sx={{ mt: 2 }}>
                                 <CardContent>
                                     <Typography mb={1.5} variant="h4" component="div">
-                                        2. Phí giữ xe tháng (chung cả phòng)
+                                        2. Phí giữ xe tháng
                                     </Typography>
                                     <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
                                         - Xe máy: 50000đ

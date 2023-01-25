@@ -28,7 +28,9 @@ const RoomTypeTable = Loadable(lazy(() => import('views/request-room/RoomTypeTab
 const RequestRoomTable = Loadable(lazy(() => import('views/request-room/RequestRoomTable')));
 const RequestList = Loadable(lazy(() => import('views/request-list')));
 const RoomTracking = Loadable(lazy(() => import('views/room-tracking')));
-const ManageRoom = Loadable(lazy(() => import('views/manage-room')));
+const ManageBill = Loadable(lazy(() => import('views/manage-bill')));
+const RoomDetailBill = Loadable(lazy(() => import('views/manage-bill/RoomDetailBill')));
+const RoomListTable = Loadable(lazy(() => import('views/manage-bill/RoomListTable')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = (isAllowed) => ({
@@ -95,8 +97,26 @@ const MainRoutes = (isAllowed) => ({
             element: <ManageOfficer />
         },
         {
-            path: 'manage-room',
-            element: <ManageRoom />
+            path: 'manage-bill',
+            element: <ManageBill />,
+            children: [
+                {
+                    path: '',
+                    element: <RoomListTable />
+                },
+                {
+                    path: 'default',
+                    element: <RoomListTable />
+                },
+                {
+                    path: ':monthId/:buildingId/:floorId',
+                    element: <RoomListTable />
+                },
+                {
+                    path: ':monthId/:buildingId/:floorId/:roomId',
+                    element: <RoomDetailBill />
+                }
+            ]
         },
         {
             path: 'request-room',
@@ -111,7 +131,7 @@ const MainRoutes = (isAllowed) => ({
                     element: <RoomTypeTable />
                 },
                 {
-                    path: ':_buildingId/:floorId',
+                    path: ':buildingId/:floorId',
                     element: <RequestRoomTable />
                 }
             ]
