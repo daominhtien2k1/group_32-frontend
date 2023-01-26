@@ -60,6 +60,14 @@ const other = {
             breadcrumbs: false
         },
         {
+            id: 'manage-notification',
+            title: 'Quản lý thông báo',
+            type: 'item',
+            url: '/manage-notification',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
             id: 'request-room',
             title: 'Đăng kí phòng',
             type: 'item',

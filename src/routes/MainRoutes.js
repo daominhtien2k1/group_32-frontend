@@ -5,6 +5,7 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
 import ProtectedRoute from './ProtectedRoute';
+import ManageNotification from 'views/manage-notification';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -87,6 +88,10 @@ const MainRoutes = (isAllowed) => ({
         {
             path: 'manage-building',
             element: <ManageBuilding />
+        },
+        {
+            path: 'manage-notification',
+            element: <ManageNotification />
         },
         {
             path: 'manage-room-type',
