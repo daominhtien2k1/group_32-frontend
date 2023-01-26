@@ -93,7 +93,7 @@ const other = {
         },
         {
             id: 'profile',
-            title: 'profile',
+            title: 'Thông tin cá nhân',
             type: 'item',
             url: '/profile',
             icon: icons.IconBrandChrome,
