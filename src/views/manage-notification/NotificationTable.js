@@ -163,7 +163,7 @@ export const CreateNewNotificationModal = ({ open, columns, onClose, onSubmit })
     return (
         <Dialog open={open}>
             <DialogTitle textAlign="center">Thêm thông báo</DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ overflowY: 'visible' }}>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Stack
                         sx={{

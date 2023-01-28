@@ -196,7 +196,7 @@ export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => 
     return (
         <Dialog open={open}>
             <DialogTitle textAlign="center">Thêm tòa nhà</DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ overflowY: 'visible' }}>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Stack
                         sx={{

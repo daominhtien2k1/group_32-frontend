@@ -78,6 +78,7 @@ function applySortFilter(array, comparator, query) {
 
 const RequestRoomTable = () => {
     const [detailViewOpen, setDetailViewOpen] = useState(false);
+    const [requestRoomOpen, setRequestRoomOpen] = useState(false);
     const [open, setOpen] = useState(null);
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
@@ -215,10 +216,11 @@ const RequestRoomTable = () => {
                 }}
             >
                 <MenuItem onClick={() => setDetailViewOpen(true)}>Xem chi tiết</MenuItem>
-                <MenuItem>Đăng kí</MenuItem>
+                <MenuItem onClick={() => setRequestRoomOpen(true)}>Đăng kí</MenuItem>
             </Popover>
 
             <DetailViewModal detailViewOpen={detailViewOpen} onClose={() => setDetailViewOpen(false)} onSubmit={() => {}} />
+            <RequestRoomModal requestRoomOpen={requestRoomOpen} onClose={() => setRequestRoomOpen(false)} onSubmit={() => {}} />
         </>
     );
 };
@@ -271,6 +273,43 @@ const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
                             </Card>
                         </Grid>
                     </Grid>
+                </form>
+            </DialogContent>
+            <DialogActions sx={{ p: '1.25rem' }}>
+                <Button onClick={onClose}>Quay lại</Button>
+                <Button color="secondary" onClick={handleSubmit} variant="contained">
+                    Đăng kí
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
+
+const RequestRoomModal = ({ requestRoomOpen, onClose, onSubmit }) => {
+    const subscriptionTime = ['1 tháng', '3 tháng', '6 tháng'];
+    const handleSubmit = () => {};
+
+    return (
+        <Dialog open={requestRoomOpen}>
+            <DialogTitle variant="h4" textAlign="center">
+                Chọn gói đăng kí
+            </DialogTitle>
+            <DialogContent sx={{ overflowY: 'visible' }}>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <Stack
+                        sx={{
+                            width: '100%',
+                            gap: '1.5rem'
+                        }}
+                    >
+                        <TextField label="Gói thời hạn" name="Gói thời hạn" select onChange={() => {}}>
+                            {subscriptionTime.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Stack>
                 </form>
             </DialogContent>
             <DialogActions sx={{ p: '1.25rem' }}>

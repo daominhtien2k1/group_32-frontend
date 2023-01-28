@@ -221,7 +221,7 @@ export const CreateNewRoomTypeModal = ({ open, columns, onClose, onSubmit }) => 
     return (
         <Dialog open={open}>
             <DialogTitle textAlign="center">Thêm loại phòng</DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ overflowY: 'visible' }}>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Stack
                         sx={{

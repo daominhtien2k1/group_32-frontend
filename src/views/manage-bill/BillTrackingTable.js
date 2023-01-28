@@ -165,7 +165,7 @@ export const CreateNewOfficerModal = ({ open, columns, onClose, onSubmit }) => {
     return (
         <Dialog open={open}>
             <DialogTitle textAlign="center">Thêm sinh viên</DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ overflowY: 'visible' }}>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Stack
                         sx={{
