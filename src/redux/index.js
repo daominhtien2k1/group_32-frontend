@@ -4,20 +4,22 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 // reducer import
 import customizationReducer from './reducers/customizationReducer';
-import { studentLoginReducer } from './reducers/StudentReducers';
+import { userLoginReducer } from './reducers/UserReducers';
+import { buildingListReducer } from './reducers/BuildingReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
     customization: customizationReducer,
-    studentLogin: studentLoginReducer
+    userLogin: userLoginReducer,
+    buildingList: buildingListReducer
 });
 
-const studentInfoFromLocalStogare = localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : null;
+const userInfoFromLocalStogare = localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : null;
 
 const initialState = {
-    studentLogin: {
+    userLogin: {
         status: 'From local storage',
-        studentInfo: studentInfoFromLocalStogare
+        userInfo: userInfoFromLocalStogare
     }
 };
 

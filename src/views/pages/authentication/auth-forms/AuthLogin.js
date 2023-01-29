@@ -38,7 +38,7 @@ import useScriptRef from 'hooks/useScriptRef';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { login } from '../../../../redux/actions/StudentActions';
+import { login } from '../../../../redux/actions/UserActions';
 
 // ============================|| LOGIN ||============================ //
 
@@ -50,8 +50,8 @@ const AuthLogin = ({ ...others }) => {
 
     const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
-    const studentLogin = useSelector((state) => state.studentLogin);
-    const { error, loading, success, studentInfo } = studentLogin;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { error, loading, success, userInfo: userInfo } = userLogin;
 
     useEffect(() => {
         if (success) {
@@ -65,10 +65,10 @@ const AuthLogin = ({ ...others }) => {
                 progress: undefined
             });
         }
-        if (studentInfo) {
+        if (userInfo) {
             navigate('/');
         }
-    }, [studentInfo, navigate]);
+    }, [userInfo, navigate]);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);

@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import MaterialReactTable from 'material-react-table';
 import {
     Box,
@@ -14,8 +16,9 @@ import {
     Tooltip
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
+import { getBuildingList } from '../../redux/actions/BuildingActions';
 
-const data = [
+let data = [
     {
         id: '9s41rp',
         name: 'B1',
@@ -61,8 +64,32 @@ const floors = [
 ];
 
 const BuildingTable = () => {
-    const [createModalOpen, setCreateModalOpen] = useState(false);
+    const dispatch = useDispatch();
+    const buildingList = useSelector((state) => state.buildingList);
+    let { loading, error, buildings } = buildingList;
     const [tableData, setTableData] = useState(() => data);
+    // console.log('Data', data);
+    // console.log('Tabledata', tableData);
+
+    useEffect(() => {
+        dispatch(getBuildingList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (buildings.length !== 0) {
+            data = buildings.data.items.map((building) => {
+                return {
+                    id: building.id,
+                    name: building.name,
+                    floors: `${building.numberOfFloor} tầng`,
+                    address: building.address
+                };
+            });
+        }
+        setTableData(data);
+    }, [buildings]);
+
+    const [createModalOpen, setCreateModalOpen] = useState(false);
     const [validationErrors, setValidationErrors] = useState({});
 
     const handleCreateNewRow = (values) => {

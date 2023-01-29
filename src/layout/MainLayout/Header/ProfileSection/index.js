@@ -39,7 +39,7 @@ import User1 from 'assets/images/users/user-round.svg';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 
-import { logout } from '../../../../redux/actions/StudentActions';
+import { logout } from '../../../../redux/actions/UserActions';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -51,14 +51,14 @@ const ProfileSection = () => {
     const [value, setValue] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
-    const studentLogin = useSelector((state) => state.studentLogin);
-    const { studentInfo } = studentLogin;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
     const anchorRef = useRef(null);
     const handleLogout = () => {
-        if (studentInfo) {
+        if (userInfo) {
             dispatch(logout());
             navigate('pages/login');
         }
@@ -164,10 +164,10 @@ const ProfileSection = () => {
                                             <Stack direction="row" spacing={0.5} alignItems="center">
                                                 <Typography variant="h4">Xin chào, </Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 800 }}>
-                                                    {studentInfo.name}
+                                                    {userInfo.name}
                                                 </Typography>
                                             </Stack>
-                                            <Typography variant="subtitle2">Kiểu tài khoản: {sentenceCase(studentInfo.role)}</Typography>
+                                            <Typography variant="subtitle2">Kiểu tài khoản: {sentenceCase(userInfo.role)}</Typography>
                                         </Stack>
                                         <Divider sx={{ pt: 2 }} />
                                     </Box>
