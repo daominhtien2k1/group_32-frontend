@@ -51,7 +51,7 @@ const AuthLogin = ({ ...others }) => {
     const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
-    const { error, loading, success, userInfo: userInfo } = userLogin;
+    const { error, loading, success, userInfo } = userLogin;
 
     useEffect(() => {
         if (success) {

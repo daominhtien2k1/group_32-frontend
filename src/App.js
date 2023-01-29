@@ -18,7 +18,6 @@ const App = () => {
     const customization = useSelector((state) => state.customization);
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
-
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={themes(customization)}>

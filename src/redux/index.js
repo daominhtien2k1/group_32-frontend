@@ -15,7 +15,7 @@ const reducer = combineReducers({
     buildingDelete: deleteBuildingReducer
 });
 
-const userInfoFromLocalStogare = localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : null;
+const userInfoFromLocalStogare = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
 
 const initialState = {
     userLogin: {

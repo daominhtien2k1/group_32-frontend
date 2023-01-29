@@ -16,7 +16,7 @@ import {
     Tooltip
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { getBuildingList } from '../../redux/actions/BuildingActions';
+import { deleteBuilding, getBuildingList, updateBuilding } from '../../redux/actions/BuildingActions';
 
 let data = [
     {
@@ -74,7 +74,7 @@ const BuildingTable = () => {
     useEffect(() => {
         dispatch(getBuildingList());
     }, [dispatch]);
-
+    // console.log(buildings);
     useEffect(() => {
         if (buildings.length !== 0) {
             data = buildings.data.items.map((building) => {
@@ -100,6 +100,9 @@ const BuildingTable = () => {
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         if (!Object.keys(validationErrors).length) {
             tableData[row.index] = values;
+            console.log(values);
+            const { id, name, floors, address } = values;
+            // dispatch(updateBuilding(id, { name: name, address: address, numberOfFloor: floors }));
             //send/receive api updates here, then refetch or update local table data for re-render
             setTableData([...tableData]);
             exitEditingMode(); //required to exit editing mode and close modal
@@ -115,7 +118,7 @@ const BuildingTable = () => {
             if (!confirm(`Bạn có muốn xóa tòa nhà: ${row.getValue('name')}`)) {
                 return;
             }
-            //send api delete request here, then refetch or update local table data for re-render
+            // dispatch(deleteBuilding())
             tableData.splice(row.index, 1);
             setTableData([...tableData]);
         },

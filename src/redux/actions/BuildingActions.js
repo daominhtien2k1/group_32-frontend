@@ -6,7 +6,10 @@ import {
     BUILDING_DELETE_SUCCESS,
     BUILDING_LIST_FAIL,
     BUILDING_LIST_REQUEST,
-    BUILDING_LIST_SUCCESS
+    BUILDING_LIST_SUCCESS,
+    BUILDING_UPDATE_FAIL,
+    BUILDING_UPDATE_REQUEST,
+    BUILDING_UPDATE_SUCCESS
 } from '../constants/BuildingConstants';
 
 export const getBuildingList = () => async (dispatch, getState) => {
@@ -26,6 +29,28 @@ export const getBuildingList = () => async (dispatch, getState) => {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({
             type: BUILDING_LIST_FAIL,
+            payload: message
+        });
+    }
+};
+
+export const updateBuilding = (id, building) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: BUILDING_UPDATE_REQUEST });
+        const {
+            userLogin: { userInfo }
+        } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+        const { data } = await axios.put(`${backend_url}/api/buildings/${id}`, building, config);
+        dispatch({ type: BUILDING_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({
+            type: BUILDING_UPDATE_FAIL,
             payload: message
         });
     }

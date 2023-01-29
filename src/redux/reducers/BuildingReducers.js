@@ -4,7 +4,10 @@ import {
     BUILDING_DELETE_SUCCESS,
     BUILDING_LIST_FAIL,
     BUILDING_LIST_REQUEST,
-    BUILDING_LIST_SUCCESS
+    BUILDING_LIST_SUCCESS,
+    BUILDING_UPDATE_FAIL,
+    BUILDING_UPDATE_REQUEST,
+    BUILDING_UPDATE_SUCCESS
 } from '../constants/BuildingConstants';
 
 const initBuildings = {
@@ -18,6 +21,19 @@ export const buildingListReducer = (state = initBuildings, action) => {
         case BUILDING_LIST_SUCCESS:
             return { loading: false, buildings: action.payload };
         case BUILDING_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const updateBuildingReducer = (state = {}, action) => {
+    switch (action.type) {
+        case BUILDING_UPDATE_REQUEST:
+            return { loading: true };
+        case BUILDING_UPDATE_SUCCESS:
+            return { loading: false, success: true, building: action.payload };
+        case BUILDING_UPDATE_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;
