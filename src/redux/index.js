@@ -5,13 +5,15 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // reducer import
 import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
-import { buildingListReducer, deleteBuildingReducer } from './reducers/BuildingReducers';
+import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
     customization: customizationReducer,
     userLogin: userLoginReducer,
     buildingList: buildingListReducer,
+    buildingCreate: createBuildingReducer,
+    buildingUpdate: updateBuildingReducer,
     buildingDelete: deleteBuildingReducer
 });
 

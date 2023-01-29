@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { backend_url } from '../backend_url';
 import {
+    BUILDING_CREATE_FAIL,
+    BUILDING_CREATE_REQUEST,
+    BUILDING_CREATE_SUCCESS,
     BUILDING_DELETE_FAIL,
     BUILDING_DELETE_REQUEST,
     BUILDING_DELETE_SUCCESS,
@@ -29,6 +32,28 @@ export const getBuildingList = () => async (dispatch, getState) => {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
         dispatch({
             type: BUILDING_LIST_FAIL,
+            payload: message
+        });
+    }
+};
+
+export const createBuilding = (building) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: BUILDING_CREATE_REQUEST });
+        const {
+            userLogin: { userInfo }
+        } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+        await axios.post(`${backend_url}/api/buildings`, building, config);
+        dispatch({ type: BUILDING_CREATE_SUCCESS });
+    } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({
+            type: BUILDING_CREATE_FAIL,
             payload: message
         });
     }
