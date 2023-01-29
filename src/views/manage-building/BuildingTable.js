@@ -124,6 +124,11 @@ const BuildingTable = () => {
 
     const columns = [
         {
+            accessorKey: 'id',
+            header: 'ID',
+            size: 140
+        },
+        {
             accessorKey: 'name',
             header: 'Tên khu kí túc',
             size: 140

@@ -5,13 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // reducer import
 import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
-import { buildingListReducer } from './reducers/BuildingReducers';
+import { buildingListReducer, deleteBuildingReducer } from './reducers/BuildingReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
     customization: customizationReducer,
     userLogin: userLoginReducer,
-    buildingList: buildingListReducer
+    buildingList: buildingListReducer,
+    buildingDelete: deleteBuildingReducer
 });
 
 const userInfoFromLocalStogare = localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : null;
