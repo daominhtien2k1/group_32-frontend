@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
 import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
+import { roomFromBuiIDListReducer } from './reducers/RoomReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
@@ -14,7 +15,8 @@ const reducer = combineReducers({
     buildingList: buildingListReducer,
     buildingCreate: createBuildingReducer,
     buildingUpdate: updateBuildingReducer,
-    buildingDelete: deleteBuildingReducer
+    buildingDelete: deleteBuildingReducer,
+    roomFromBuiIDList: roomFromBuiIDListReducer
 });
 
 const userInfoFromLocalStogare = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
