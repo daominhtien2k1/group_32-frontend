@@ -15,7 +15,40 @@ import {
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
-import data from '../../mock/Officier';
+// import data from '../../mock/Officier';
+
+let data = [
+    {
+        id: '9s41rp',
+        name: 'Nguyễn Hữu Khôi',
+        email: 'khoi.nguyenhuu@hust.edu.vn',
+        role: 'Giám đốc Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        name: 'Vũ Văn Trường',
+        email: 'truong.vuvan@hust.edu.vn',
+        role: 'Phó Giám đốc Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        name: 'Vũ Thanh Nga',
+        email: 'nga.vuthanh@hust.edu.vn',
+        role: 'Cán bộ Văn phòng Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        name: 'Nguyễn Thị Thu Hồng',
+        email: 'hong.nguyenthithu2@hust.edu.vn',
+        role: 'Cán bộ Văn phòng Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        name: 'Trần Thị Kim Thành',
+        email: 'thanh.tranthikim@hust.edu.vn',
+        role: 'Cán bộ Văn phòng Trung tâm'
+    }
+];
 
 const OfficerTable = () => {
     const [createModalOpen, setCreateModalOpen] = useState(false);
