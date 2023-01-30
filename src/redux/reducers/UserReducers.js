@@ -25,14 +25,13 @@ export const userLoginReducer = (state = initUserInfo, action) => {
             console.log('update request:', state);
             return { ...state, loading: true, success: false };
         case USER_UPDATE_PROFILE_SUCCESS:
+            console.log('update success:', state);
             const token = state.userInfo.token;
             let tmpUserInfo = { ...action.payload };
             tmpUserInfo.token = token;
-            console.log('check state:', state.userInfo);
             return { ...state, loading: false, success: true, userInfo: { ...tmpUserInfo } };
         case USER_UPDATE_PROFILE_FAIL:
             console.log('check state: run failed');
-
             return { ...state, loading: false, error: action.payload };
         default:
             return state;
