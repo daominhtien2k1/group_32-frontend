@@ -7,6 +7,7 @@ import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
 import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
 import { roomFromBuiIDListReducer } from './reducers/RoomReducers';
+import { createRequestRoomReducer, requestRoomListReducer } from './reducers/RequestRoomReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
@@ -16,7 +17,9 @@ const reducer = combineReducers({
     buildingCreate: createBuildingReducer,
     buildingUpdate: updateBuildingReducer,
     buildingDelete: deleteBuildingReducer,
-    roomFromBuiIDList: roomFromBuiIDListReducer
+    roomFromBuiIDList: roomFromBuiIDListReducer,
+    requestRoomCreate: createRequestRoomReducer,
+    requestRoomList: requestRoomListReducer
 });
 
 const userInfoFromLocalStogare = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;

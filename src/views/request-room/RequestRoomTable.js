@@ -34,6 +34,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { filter } from 'lodash';
 import { gridSpacing } from '../../redux/constants/constant';
 import { getRoomFromBuildingIDList } from '../../redux/actions/RoomActions';
+import { createRequest } from '../../redux/actions/RequestActions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TABLE_HEAD = [
     { id: 'name', label: 'Tên phòng' },
@@ -65,11 +68,7 @@ function applySortFilter(array, comparator, query) {
     });
     if (query) {
         return filter(array, (_room) => {
-            return (
-                _room.type.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-                query.toLowerCase().includes(_room.beds.toLowerCase()) ||
-                query.toLowerCase().includes(_room.genderType.toLowerCase())
-            );
+            return _room.type.toLowerCase().indexOf(query.toLowerCase()) !== -1 || query.toLowerCase().includes(_room.beds.toLowerCase());
         });
     }
     return stabilizedThis.map((el) => el[0]);
@@ -95,7 +94,8 @@ const RequestRoomTable = () => {
                 return {
                     id: item.id,
                     name: item.name,
-                    beds: item.RoomCategory.capacity,
+                    type: item.RoomCategory.name,
+                    beds: `${item.RoomCategory.capacity} giường`,
                     leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity} giường`
                 };
             });
@@ -103,8 +103,34 @@ const RequestRoomTable = () => {
             // console.log(ROOMLISTDATA);
         }
     }, [rooms]);
+
     const [detailViewOpen, setDetailViewOpen] = useState(false);
     const [requestRoomOpen, setRequestRoomOpen] = useState(false);
+
+    // id room for create request
+    const [id, setID] = useState(-1);
+    const handleCreateRequestRoom = () => {
+        // console.log(id);
+        setDetailViewOpen(false);
+        dispatch(createRequest({ roomId: id, type: 'room' }));
+    };
+
+    const requestRoomCreate = useSelector((state) => state.requestRoomCreate);
+    const { loading: loadingRequest, success: successRequest, error: errorRequest, request } = requestRoomCreate;
+    useEffect(() => {
+        if (successRequest) {
+            toast.success('Yêu cầu phòng thành công!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined
+            });
+        }
+    }, [successRequest]);
+
     const [open, setOpen] = useState(null);
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
@@ -112,7 +138,9 @@ const RequestRoomTable = () => {
     const [filterType, setFilterType] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const handleOpenMenu = (event) => {
+    const handleOpenMenu = (event, id) => {
+        // console.log(id);
+        setID(id);
         setOpen(event.currentTarget);
     };
 
@@ -146,6 +174,17 @@ const RequestRoomTable = () => {
 
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+            />
             <Card>
                 <RoomListToolbar filterType={filterType} onFilterType={handleFilterByType} />
                 <TableContainer sx={{ minWidth: 800, paddingX: 2 }}>
@@ -168,7 +207,7 @@ const RequestRoomTable = () => {
                                         <TableCell align="left">{beds} giường</TableCell>
                                         <TableCell align="left">{leftBeds} giường</TableCell>
                                         <TableCell align="right">
-                                            <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                                            <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
                                                 <Iconify icon={'eva:more-vertical-fill'} />
                                             </IconButton>
                                         </TableCell>
@@ -238,7 +277,7 @@ const RequestRoomTable = () => {
                 }}
             >
                 <MenuItem onClick={() => setDetailViewOpen(true)}>Xem chi tiết</MenuItem>
-                <MenuItem onClick={() => setRequestRoomOpen(true)}>Đăng kí</MenuItem>
+                <MenuItem onClick={handleCreateRequestRoom}>Đăng kí</MenuItem>
             </Popover>
 
             <DetailViewModal detailViewOpen={detailViewOpen} onClose={() => setDetailViewOpen(false)} onSubmit={() => {}} />
