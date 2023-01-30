@@ -136,7 +136,7 @@ const MainRoutes = (isAllowed) => ({
                     element: <RoomTypeTable />
                 },
                 {
-                    path: ':buildingId/:floorId',
+                    path: ':buildingId',
                     element: <RequestRoomTable />
                 }
             ]

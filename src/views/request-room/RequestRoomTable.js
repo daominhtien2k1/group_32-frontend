@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
     Button,
     Card,
@@ -24,21 +26,20 @@ import {
 } from '@mui/material';
 import RoomListToolbar from '../../sections/room/RoomListToolBar';
 import RoomListHead from '../../sections/room/RoomListHead';
-import ROOMLIST from '../../mock/Room';
+import RoomData from '../../mock/Room';
 import Label from '../../ui-component/label';
 import Iconify from '../../ui-component/iconify';
 import MenuItem from '@mui/material/MenuItem';
 
 import { filter } from 'lodash';
 import { gridSpacing } from '../../redux/constants/constant';
+import { getRoomFromBuildingIDList } from '../../redux/actions/RoomActions';
 
 const TABLE_HEAD = [
     { id: 'name', label: 'Tên phòng' },
     { id: 'type', label: 'Loại phòng' },
     { id: 'beds', label: 'Số giường' },
-    { id: 'genderType', label: 'Kiểu phòng' },
-    { id: 'leftBeds', label: 'Số giường còn lại' },
-    { id: 'status', label: 'Trạng thái' }
+    { id: 'leftBeds', label: 'Số giường còn lại' }
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -77,6 +78,31 @@ function applySortFilter(array, comparator, query) {
 // ==============================|| Request room page||============================== //
 
 const RequestRoomTable = () => {
+    const params = useParams();
+    const { buildingId } = params;
+    const dispatch = useDispatch();
+    const roomFromBuiIDList = useSelector((state) => state.roomFromBuiIDList);
+    let { loading, error, rooms } = roomFromBuiIDList;
+
+    useEffect(() => {
+        dispatch(getRoomFromBuildingIDList(buildingId));
+    }, [dispatch, buildingId]);
+
+    const [ROOMLIST, SETROOMLIST] = useState(RoomData);
+    useEffect(() => {
+        if (rooms.length !== 0) {
+            const ROOMLISTDATA = rooms.data.items.map((item) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    beds: item.RoomCategory.capacity,
+                    leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity} giường`
+                };
+            });
+            SETROOMLIST(ROOMLISTDATA);
+            // console.log(ROOMLISTDATA);
+        }
+    }, [rooms]);
     const [detailViewOpen, setDetailViewOpen] = useState(false);
     const [requestRoomOpen, setRequestRoomOpen] = useState(false);
     const [open, setOpen] = useState(null);
@@ -133,18 +159,14 @@ const RequestRoomTable = () => {
                         />
                         <TableBody>
                             {filteredRooms.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                const { id, name, beds, type, genderType, leftBeds, status } = row;
+                                const { id, name, beds, type, leftBeds } = row;
 
                                 return (
                                     <TableRow hover key={id} tabIndex={-1} role="checkbox">
                                         <TableCell align="left">{name}</TableCell>
                                         <TableCell align="left">{type}</TableCell>
                                         <TableCell align="left">{beds} giường</TableCell>
-                                        <TableCell align="left">{genderType}</TableCell>
                                         <TableCell align="left">{leftBeds} giường</TableCell>
-                                        <TableCell align="left">
-                                            <Label color={(status === 'Không khả dụng' && 'error') || 'success'}>{status}</Label>
-                                        </TableCell>
                                         <TableCell align="right">
                                             <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
                                                 <Iconify icon={'eva:more-vertical-fill'} />
@@ -220,7 +242,7 @@ const RequestRoomTable = () => {
             </Popover>
 
             <DetailViewModal detailViewOpen={detailViewOpen} onClose={() => setDetailViewOpen(false)} onSubmit={() => {}} />
-            <RequestRoomModal requestRoomOpen={requestRoomOpen} onClose={() => setRequestRoomOpen(false)} onSubmit={() => {}} />
+            {/*<RequestRoomModal requestRoomOpen={requestRoomOpen} onClose={() => setRequestRoomOpen(false)} onSubmit={() => {}} />*/}
         </>
     );
 };
@@ -285,41 +307,41 @@ const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
     );
 };
 
-const RequestRoomModal = ({ requestRoomOpen, onClose, onSubmit }) => {
-    const subscriptionTime = ['1 tháng', '3 tháng', '6 tháng'];
-    const handleSubmit = () => {};
-
-    return (
-        <Dialog open={requestRoomOpen}>
-            <DialogTitle variant="h4" textAlign="center">
-                Chọn gói đăng kí
-            </DialogTitle>
-            <DialogContent sx={{ overflowY: 'visible' }}>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <Stack
-                        sx={{
-                            width: '100%',
-                            gap: '1.5rem'
-                        }}
-                    >
-                        <TextField label="Gói thời hạn" name="Gói thời hạn" select onChange={() => {}}>
-                            {subscriptionTime.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </Stack>
-                </form>
-            </DialogContent>
-            <DialogActions sx={{ p: '1.25rem' }}>
-                <Button onClick={onClose}>Quay lại</Button>
-                <Button color="secondary" onClick={handleSubmit} variant="contained">
-                    Đăng kí
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-};
+// const RequestRoomModal = ({ requestRoomOpen, onClose, onSubmit }) => {
+//     const subscriptionTime = ['1 tháng', '3 tháng', '6 tháng'];
+//     const handleSubmit = () => {};
+//
+//     return (
+//         <Dialog open={requestRoomOpen}>
+//             <DialogTitle variant="h4" textAlign="center">
+//                 Chọn gói đăng kí
+//             </DialogTitle>
+//             <DialogContent sx={{ overflowY: 'visible' }}>
+//                 <form onSubmit={(e) => e.preventDefault()}>
+//                     <Stack
+//                         sx={{
+//                             width: '100%',
+//                             gap: '1.5rem'
+//                         }}
+//                     >
+//                         <TextField label="Gói thời hạn" name="Gói thời hạn" select onChange={() => {}}>
+//                             {subscriptionTime.map((option) => (
+//                                 <MenuItem key={option} value={option}>
+//                                     {option}
+//                                 </MenuItem>
+//                             ))}
+//                         </TextField>
+//                     </Stack>
+//                 </form>
+//             </DialogContent>
+//             <DialogActions sx={{ p: '1.25rem' }}>
+//                 <Button onClick={onClose}>Quay lại</Button>
+//                 <Button color="secondary" onClick={handleSubmit} variant="contained">
+//                     Đăng kí
+//                 </Button>
+//             </DialogActions>
+//         </Dialog>
+//     );
+// };
 
 export default RequestRoomTable;

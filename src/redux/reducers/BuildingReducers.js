@@ -1,4 +1,7 @@
 import {
+    BUILDING_CREATE_FAIL,
+    BUILDING_CREATE_REQUEST,
+    BUILDING_CREATE_SUCCESS,
     BUILDING_DELETE_FAIL,
     BUILDING_DELETE_REQUEST,
     BUILDING_DELETE_SUCCESS,
@@ -21,6 +24,19 @@ export const buildingListReducer = (state = initBuildings, action) => {
         case BUILDING_LIST_SUCCESS:
             return { loading: false, buildings: action.payload };
         case BUILDING_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const createBuildingReducer = (state = {}, action) => {
+    switch (action.type) {
+        case BUILDING_CREATE_REQUEST:
+            return { loading: true };
+        case BUILDING_CREATE_SUCCESS:
+            return { loading: false, success: true };
+        case BUILDING_CREATE_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;

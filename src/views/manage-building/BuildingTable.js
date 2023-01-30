@@ -16,7 +16,7 @@ import {
     Tooltip
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { deleteBuilding, getBuildingList, updateBuilding } from '../../redux/actions/BuildingActions';
+import { createBuilding, deleteBuilding, getBuildingList, updateBuilding } from '../../redux/actions/BuildingActions';
 
 let data = [
     {
@@ -94,6 +94,10 @@ const BuildingTable = () => {
 
     const handleCreateNewRow = (values) => {
         tableData.push(values);
+        console.log(values);
+        const { id, name, floors, address } = values;
+        const floorNum = parseInt(floors.split(' ')[0], 10);
+        dispatch(createBuilding({ name: name, address: address, numberOfFloor: floorNum }));
         setTableData([...tableData]);
     };
 
@@ -102,7 +106,8 @@ const BuildingTable = () => {
             tableData[row.index] = values;
             console.log(values);
             const { id, name, floors, address } = values;
-            // dispatch(updateBuilding(id, { name: name, address: address, numberOfFloor: floors }));
+            const floorNum = parseInt(floors.split(' ')[0], 10);
+            dispatch(updateBuilding(id, { name: name, address: address, numberOfFloor: floorNum }));
             //send/receive api updates here, then refetch or update local table data for re-render
             setTableData([...tableData]);
             exitEditingMode(); //required to exit editing mode and close modal
@@ -118,7 +123,8 @@ const BuildingTable = () => {
             if (!confirm(`Bạn có muốn xóa tòa nhà: ${row.getValue('name')}`)) {
                 return;
             }
-            // dispatch(deleteBuilding())
+            const id = row.getValue('id');
+            dispatch(deleteBuilding(id));
             tableData.splice(row.index, 1);
             setTableData([...tableData]);
         },
@@ -241,6 +247,16 @@ export const CreateNewBuildingModal = ({ open, columns, onClose, onSubmit }) => 
                         }}
                     >
                         {columns.map((column) => {
+                            if (column.accessorKey === 'id')
+                                return (
+                                    <TextField
+                                        disabled={false}
+                                        key={column.accessorKey}
+                                        label={column.header}
+                                        name={column.accessorKey}
+                                        onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+                                    />
+                                );
                             if (column.accessorKey !== 'floors')
                                 return (
                                     <TextField
