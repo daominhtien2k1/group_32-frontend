@@ -11,14 +11,18 @@ import MainCard from 'ui-component/cards/MainCard';
 
 const Profile = () => {
     const [userInfo, setUserInfo] = useState(useSelector((state) => state.userLogin.userInfo));
+
     const { success } = useSelector((state) => state.userLogin);
+
     const dispatch = useDispatch();
+
     const handleChangeUserInfo = (e, field) => {
         setUserInfo((prevState) => ({
             ...prevState,
             [field]: e.target.value
         }));
     };
+
     const onUpdateProfile = () => {
         console.log('click update profile');
         dispatch(
@@ -31,6 +35,7 @@ const Profile = () => {
             window.location.reload();
         }
     };
+
     return (
         <MainCard
             sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}
