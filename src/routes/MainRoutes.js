@@ -6,6 +6,7 @@ import Loadable from 'ui-component/Loadable';
 
 import ProtectedRoute from './ProtectedRoute';
 import ManageNotification from 'views/manage-notification';
+import Complaints from 'views/complaints';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -152,6 +153,10 @@ const MainRoutes = (isAllowed) => ({
         {
             path: 'officer',
             element: <Officer />
+        },
+        {
+            path: 'complaints',
+            element: <Complaints />
         },
         {
             path: 'profile',
