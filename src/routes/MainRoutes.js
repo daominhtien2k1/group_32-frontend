@@ -32,6 +32,7 @@ const RoomTracking = Loadable(lazy(() => import('views/room-tracking')));
 const ManageBill = Loadable(lazy(() => import('views/manage-bill')));
 const RoomDetailBill = Loadable(lazy(() => import('views/manage-bill/RoomDetailBill')));
 const RoomListTable = Loadable(lazy(() => import('views/manage-bill/RoomListTable')));
+const ManageRequest = Loadable(lazy(() => import('views/manage-request')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = (isAllowed) => ({
@@ -88,6 +89,10 @@ const MainRoutes = (isAllowed) => ({
         {
             path: 'manage-building',
             element: <ManageBuilding />
+        },
+        {
+            path: 'manage-request',
+            element: <ManageRequest />
         },
         {
             path: 'manage-notification',

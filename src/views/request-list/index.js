@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import MaterialReactTable from 'material-react-table';
 import MainCard from '../../ui-component/cards/MainCard';
-import { Stack, Typography } from '@mui/material';
-import { getRequestList } from '../../redux/actions/RequestActions';
+import { Box, IconButton, MenuItem, Stack, Typography } from '@mui/material';
+import { deleteRequestRoom, getRequestList } from '../../redux/actions/RequestActions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let data = [
     {
-        name: 'AAA',
+        name: 'Nguyễn Văn A',
         mssv: '20190070',
         date: '1/1/2022',
         status: 'Đăng kí thành công',
@@ -23,6 +25,10 @@ let data = [
 
 const RequestListTable = ({ data }) => {
     const columns = [
+        // {
+        //     accessorKey: 'id',
+        //     header: 'id'
+        // },
         {
             accessorKey: 'name',
             header: 'Họ và tên'
@@ -64,9 +70,56 @@ const RequestListTable = ({ data }) => {
         //     header: 'Ngày trả phòng'
         // }
     ];
+
+    const dispatch = useDispatch();
+    const requestRoomDelete = useSelector((state) => state.requestRoomDelete);
+    const { loading, success, error } = requestRoomDelete;
+
+    const handleDeleteRequest = (id) => {
+        dispatch(deleteRequestRoom(id));
+    };
+    useEffect(() => {
+        if (error) {
+            toast.error('Không thể xóa yêu cầu khi đã được từ chối/chấp nhận!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined
+            });
+        }
+        if (success) {
+            toast.success('Xóa yêu cầu thành công!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined
+            });
+        }
+    }, [error, success]);
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+            />
             <MaterialReactTable
+                enableRowActions
+                renderRowActionMenuItems={(row, index) => [
+                    <MenuItem onClick={() => handleDeleteRequest(row.row.original.id)}>Xóa</MenuItem>
+                ]}
                 columns={columns}
                 data={data}
                 enableColumnActions={false}
@@ -93,6 +146,7 @@ const RequestList = () => {
         if (requests.length !== 0) {
             data = requests.data.items.map((item) => {
                 return {
+                    id: item.id,
                     name: item.User.name,
                     mssv: item.User.studentCode,
                     date: item.createdAt,
@@ -103,6 +157,8 @@ const RequestList = () => {
             });
         }
     }, [requests]);
+    // bị lỗi chậm 1 đợt
+    console.log(data);
     return (
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>

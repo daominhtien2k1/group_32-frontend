@@ -52,10 +52,18 @@ const other = {
             breadcrumbs: false
         },
         {
-            id: 'manage-room',
+            id: 'manage-bill',
             title: 'Quản lý hóa đơn',
             type: 'item',
             url: '/manage-bill',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
+            id: 'manage-request',
+            title: 'Quản lý yêu cầu',
+            type: 'item',
+            url: '/manage-request',
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },

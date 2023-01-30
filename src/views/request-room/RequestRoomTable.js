@@ -95,8 +95,8 @@ const RequestRoomTable = () => {
                     id: item.id,
                     name: item.name,
                     type: item.RoomCategory.name,
-                    beds: `${item.RoomCategory.capacity} giường`,
-                    leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity} giường`
+                    beds: `${item.RoomCategory.capacity}`,
+                    leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity}`
                 };
             });
             SETROOMLIST(ROOMLISTDATA);
