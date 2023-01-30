@@ -13,7 +13,7 @@ import { backend_url } from '../backend_url';
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: USER_LOGIN_REQUEST });
-        const userResult = await axios.post(`http://localhost:3000/api/auth/login`, { email, password });
+        const userResult = await axios.post(`${backend_url}/api/auth/login`, { email, password });
         const userData = userResult.data;
         const userInfo = userData.data.user;
         const token = userData.data.tokens.access.token;
@@ -46,8 +46,7 @@ export const updateProfile = (profile) => async (dispatch, getState) => {
         let res = await axios.patch(
             `${backend_url}/api/profile`,
             {
-                name: profile.name,
-                studentCode: profile.studentCode
+                ...profile
             },
             config
         );
@@ -57,7 +56,6 @@ export const updateProfile = (profile) => async (dispatch, getState) => {
                 userLogin: { userInfo }
             } = getState();
             localStorage.setItem('userInfo', JSON.stringify({ ...userInfo }));
-            console.log('toast');
             toast.success('update success!', {
                 position: 'top-right',
                 autoClose: 5000,
@@ -83,6 +81,15 @@ export const updateProfile = (profile) => async (dispatch, getState) => {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        });
+        toast.error(`${error.response && error.response.data.message ? error.response.data.message : error.message}`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined
         });
     }
 };
