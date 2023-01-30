@@ -60,6 +60,14 @@ const other = {
             breadcrumbs: false
         },
         {
+            id: 'manage-contract',
+            title: 'Quản lý hợp đồng',
+            type: 'item',
+            url: '/manage-contract',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
             id: 'manage-request',
             title: 'Quản lý yêu cầu',
             type: 'item',
