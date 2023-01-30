@@ -51,7 +51,7 @@ const Profile = () => {
                         onChange={(e) => handleChangeUserInfo(e, 'name')}
                     />
                     <TextField sx={{ p: 1 }} id="outlined-k" label="Khóa" value={userInfo?.level ?? 'K64'} />
-                    <TextField sx={{ p: 1 }} id="outlined-email" label="Email" value={userInfo?.email ?? ''} />
+                    <TextField sx={{ p: 1 }} disabled={true} id="outlined-email" label="Email" value={userInfo?.email ?? ''} />
                     <TextField
                         sx={{ p: 1 }}
                         id="outlined-mssv"
