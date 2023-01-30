@@ -113,25 +113,25 @@ const MainRoutes = (isAllowed) => ({
         },
         {
             path: 'manage-bill',
-            element: <ManageBill />,
-            children: [
-                {
-                    path: '',
-                    element: <RoomListTable />
-                },
-                {
-                    path: 'default',
-                    element: <RoomListTable />
-                },
-                {
-                    path: ':monthId/:buildingId/:floorId',
-                    element: <RoomListTable />
-                },
-                {
-                    path: ':monthId/:buildingId/:floorId/:roomId',
-                    element: <RoomDetailBill />
-                }
-            ]
+            element: <ManageBill />
+            // children: [
+            //     {
+            //         path: '',
+            //         element: <RoomListTable />
+            //     },
+            //     {
+            //         path: 'default',
+            //         element: <RoomListTable />
+            //     },
+            //     {
+            //         path: ':monthId/:buildingId/:floorId',
+            //         element: <RoomListTable />
+            //     },
+            //     {
+            //         path: ':monthId/:buildingId/:floorId/:roomId',
+            //         element: <RoomDetailBill />
+            //     }
+            // ]
         },
         {
             path: 'request-room',

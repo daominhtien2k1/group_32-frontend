@@ -14,6 +14,7 @@ import {
     updateRequestRoomStatusReducer
 } from './reducers/RequestRoomReducers';
 import { contractListReducer } from './reducers/ContractReducers';
+import { billListReducer } from './reducers/BillReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
@@ -28,7 +29,8 @@ const reducer = combineReducers({
     requestRoomList: requestRoomListReducer,
     requestRoomDelete: deleteRequestRoomReducer,
     requestRoomStatusUpdate: updateRequestRoomStatusReducer,
-    contractList: contractListReducer
+    contractList: contractListReducer,
+    billList: billListReducer
 });
 
 const userInfoFromLocalStogare = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
