@@ -6,6 +6,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
 import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
+import {
+    roomCategoryListReducer,
+    createRoomCategoryListReducer,
+    updateRoomCategoryListReducer,
+    deleteRoomCategoryListReducer
+} from './reducers/RoomCategoryReducers.js';
 import { roomFromBuiIDListReducer } from './reducers/RoomReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
@@ -16,6 +22,10 @@ const reducer = combineReducers({
     buildingCreate: createBuildingReducer,
     buildingUpdate: updateBuildingReducer,
     buildingDelete: deleteBuildingReducer,
+    roomCategoryList: roomCategoryListReducer,
+    roomCategoryCreate: createRoomCategoryListReducer,
+    roomCategoryUpdate: updateRoomCategoryListReducer,
+    roomCategoryDelete: deleteRoomCategoryListReducer,
     roomFromBuiIDList: roomFromBuiIDListReducer
 });
 

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MaterialReactTable from 'material-react-table';
 import {
     Box,
@@ -14,70 +15,56 @@ import {
     Tooltip
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-
-const data = [
-    {
-        id: 'T6A',
-        type: 'Phòng thường',
-        beds: 6,
-        description: 'Phòng 6 bạn, có giường tầng, nhà vệ sinh khép kín',
-        price1: 160000,
-        price3: 800000,
-        price6: 1600000
-    },
-    {
-        id: 'T6B',
-        type: 'Phòng thường, máy lạnh',
-        beds: 6,
-        description: 'Phòng 6 bạn, giường tầng, nhà vệ sinh khép kín. Trong nhà tắm có trang bị bình nóng lạnh.',
-        price1: 215000,
-        price3: 1000000,
-        price6: 2000000
-    },
-    {
-        id: 'DV6',
-        type: 'Phòng dịch vụ',
-        beds: 6,
-        description: 'Phòng 6 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
-        price1: 300000,
-        price3: 1600000,
-        price6: 2800000
-    },
-    {
-        id: 'DV4',
-        type: 'Phòng dịch vụ',
-        beds: 4,
-        description: 'Phòng 4 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
-        price1: 360000,
-        price3: 2000000,
-        price6: 3200000
-    },
-    {
-        id: 'DV3',
-        type: 'Phòng dịch vụ',
-        beds: 3,
-        description: 'Phòng 3 bạn, giường tầng, nhà vệ sinh khép kín, bình nóng lạnh và đặc biệt là có điều hòa.',
-        price1: 400000,
-        price3: 4200000,
-        price6: 4400000
-    }
-];
-//50 us states array
-const beds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+import {
+    getRoomCategoryList,
+    createRoomCategory,
+    updateRoomCategory,
+    deleteRoomCategory
+} from '../../redux/actions/RoomCategoryActions.js';
 
 const RoomTypeTable = () => {
+    const dispatch = useDispatch();
+    const roomCategoryState = useSelector((state) => state.roomCategoryList);
+    console.log(roomCategoryState);
+    const { roomsCategory } = roomCategoryState;
+    const [tableData, setTableData] = useState([]);
+    useEffect(() => {
+        dispatch(getRoomCategoryList());
+    }, [dispatch]);
+    // console.log(buildings);
+    useEffect(() => {
+        let data = [];
+        if (roomsCategory.length !== 0) {
+            data = roomsCategory.map((roomCategory) => {
+                return {
+                    id: roomCategory.id,
+                    name: roomCategory.name,
+                    capacity: roomCategory.capacity,
+                    description: roomCategory.description,
+                    priceRoom: roomCategory.priceRoom
+                };
+            });
+        }
+        setTableData(data);
+    }, [roomsCategory]);
+
     const [createModalOpen, setCreateModalOpen] = useState(false);
-    const [tableData, setTableData] = useState(() => data);
     const [validationErrors, setValidationErrors] = useState({});
 
     const handleCreateNewRow = (values) => {
         tableData.push(values);
+        console.log(values);
+        const { name, capacity, description, priceRoom } = values;
+        dispatch(createRoomCategory({ name, capacity, description, priceRoom }));
         setTableData([...tableData]);
     };
 
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         if (!Object.keys(validationErrors).length) {
             tableData[row.index] = values;
+            console.log(values);
+            const { id, name, capacity, description, priceRoom } = values;
+            dispatch(updateRoomCategory(id, { name, capacity, description, priceRoom }));
             //send/receive api updates here, then refetch or update local table data for re-render
             setTableData([...tableData]);
             exitEditingMode(); //required to exit editing mode and close modal
@@ -90,12 +77,15 @@ const RoomTypeTable = () => {
 
     const handleDeleteRow = useCallback(
         (row) => {
-            if (!confirm(`Bạn có muốn xóa loại phòng: ${row.getValue('type')}`)) {
+            if (!confirm(`Bạn có muốn xóa loại phòng: ${row.getValue('name')}`)) {
                 return;
             }
             //send api delete request here, then refetch or update local table data for re-render
+            const id = row.getValue('id');
+            dispatch(deleteRoomCategory(id));
             tableData.splice(row.index, 1);
             setTableData([...tableData]);
+            deleteRoomCategory;
         },
         [tableData]
     );
@@ -107,21 +97,14 @@ const RoomTypeTable = () => {
             size: 100
         },
         {
-            accessorKey: 'type',
+            accessorKey: 'name',
             header: 'Loại phòng',
             size: 140
         },
         {
-            accessorKey: 'beds',
+            accessorKey: 'capacity',
             header: 'Số giường',
-            muiTableBodyCellEditTextFieldProps: {
-                select: true, //change to select for a dropdown
-                children: beds.map((bed) => (
-                    <MenuItem key={bed} value={bed}>
-                        {bed}
-                    </MenuItem>
-                ))
-            }
+            size: 140
         },
         {
             accessorKey: 'description',
@@ -129,18 +112,8 @@ const RoomTypeTable = () => {
             size: 200
         },
         {
-            accessorKey: 'price1',
+            accessorKey: 'priceRoom',
             header: 'Phí lưu trú (1 tháng)',
-            size: 200
-        },
-        {
-            accessorKey: 'price3',
-            header: 'Phí lưu trú (3 tháng)',
-            size: 200
-        },
-        {
-            accessorKey: 'price6',
-            header: 'Phí lưu trú (6 tháng)',
             size: 200
         }
     ];
@@ -231,32 +204,14 @@ export const CreateNewRoomTypeModal = ({ open, columns, onClose, onSubmit }) => 
                         }}
                     >
                         {columns.map((column) => {
-                            if (column.accessorKey !== 'beds')
-                                return (
-                                    <TextField
-                                        key={column.accessorKey}
-                                        label={column.header}
-                                        name={column.accessorKey}
-                                        onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-                                    />
-                                );
-                            else if (column.accessorKey === 'beds')
-                                return (
-                                    <TextField
-                                        SelectProps={{ MenuProps: MenuProps }}
-                                        key={column.accessorKey}
-                                        label={column.header}
-                                        name={column.accessorKey}
-                                        select
-                                        onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
-                                    >
-                                        {beds.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                );
+                            return (
+                                <TextField
+                                    key={column.accessorKey}
+                                    label={column.header}
+                                    name={column.accessorKey}
+                                    onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })}
+                                />
+                            );
                         })}
                     </Stack>
                 </form>
