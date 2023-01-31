@@ -10,16 +10,16 @@ import { detailRoom } from '../../redux/actions/RoomActions';
 import { getBillList } from '../../redux/actions/BillActions';
 
 let data = [
-    {
-        stt: 1,
-        name: 'Đào Minh Tiến',
-        mssv: 20190070
-    },
-    {
-        stt: 2,
-        name: 'Vũ Đình Tiến',
-        mssv: 20190071
-    }
+    // {
+    //     stt: 1,
+    //     name: 'Đào Minh Tiến',
+    //     mssv: 20190070
+    // },
+    // {
+    //     stt: 2,
+    //     name: 'Vũ Đình Tiến',
+    //     mssv: 20190071
+    // }
 ];
 
 const FriendListTable = ({ data }) => {
@@ -166,7 +166,10 @@ const RoomTracking = () => {
                                             1. Phí lưu trú
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
-                                            - Tiền phòng: {bills != null ? `${bills?.data?.items[0].priceRoom} đ` : 'Không có'}
+                                            - Tiền phòng:
+                                            {bills != null && dataStudent.length !== 0
+                                                ? `${bills?.data?.items[0].priceRoom} đ`
+                                                : ' Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
                                             - Phí tiền nước: {bills != null ? `${bills?.data?.items[0].priceWater} đ` : 'Không có'}

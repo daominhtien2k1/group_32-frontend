@@ -34,14 +34,16 @@ const RequestRoom = () => {
         dispatch(getBuildingList());
     }, [dispatch]);
 
+    const [dataBuildingIDlist, setDataBuildingIDlist] = useState(buildingIDList);
     useEffect(() => {
         if (buildings.length !== 0) {
-            buildingIDList = buildings.data.items.map((building) => {
+            const buildingIDListMap = buildings.data.items.map((building) => {
                 return {
                     id: building.id,
                     name: building.name
                 };
             });
+            setDataBuildingIDlist(buildingIDListMap);
         }
     }, [buildings]);
 
@@ -76,7 +78,7 @@ const RequestRoom = () => {
                             onChange={handleChangeBuilding}
                             MenuProps={MenuProps}
                         >
-                            {buildingIDList.map((item) => (
+                            {dataBuildingIDlist.map((item) => (
                                 <MenuItem value={item.id}>{item.name}</MenuItem>
                             ))}
                             {/*<MenuItem value={1}>B1</MenuItem>*/}

@@ -41,6 +41,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const TABLE_HEAD = [
     { id: 'name', label: 'Tên phòng' },
     { id: 'type', label: 'Loại phòng' },
+    { id: 'description', label: 'Mô tả chi tiết' },
     { id: 'beds', label: 'Số giường' },
     { id: 'leftBeds', label: 'Số giường còn lại' }
 ];
@@ -95,6 +96,7 @@ const RequestRoomTable = () => {
                     id: item.id,
                     name: item.name,
                     type: item.RoomCategory.name,
+                    description: item.RoomCategory.description,
                     beds: `${item.RoomCategory.capacity}`,
                     leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity}`
                 };
@@ -109,6 +111,11 @@ const RequestRoomTable = () => {
 
     // id room for create request
     const [id, setID] = useState(-1);
+    const [name, setName] = useState('101');
+    const [beds, setBeds] = useState('10');
+    const [type, setType] = useState('Có điều hòa 1');
+    const [description, setDescription] = useState('Có điều hòa, bình nóng lạnh');
+    const [leftBeds, setLeftBeds] = useState(10);
     const handleCreateRequestRoom = () => {
         // console.log(id);
         setDetailViewOpen(false);
@@ -129,7 +136,19 @@ const RequestRoomTable = () => {
                 progress: undefined
             });
         }
-    }, [successRequest]);
+        if (errorRequest) {
+            console.log(errorRequest);
+            toast.error(errorRequest.message, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined
+            });
+        }
+    }, [successRequest, errorRequest]);
 
     const [open, setOpen] = useState(null);
     const [page, setPage] = useState(0);
@@ -138,9 +157,14 @@ const RequestRoomTable = () => {
     const [filterType, setFilterType] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const handleOpenMenu = (event, id) => {
+    const handleOpenMenu = (event, id, name, beds, type, description, leftBeds) => {
         // console.log(id);
         setID(id);
+        setName(name);
+        setBeds(beds);
+        setType(type);
+        setDescription(description);
+        setLeftBeds(leftBeds);
         setOpen(event.currentTarget);
     };
 
@@ -198,16 +222,21 @@ const RequestRoomTable = () => {
                         />
                         <TableBody>
                             {filteredRooms.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                const { id, name, beds, type, leftBeds } = row;
+                                const { id, name, beds, type, description, leftBeds } = row;
 
                                 return (
                                     <TableRow hover key={id} tabIndex={-1} role="checkbox">
                                         <TableCell align="left">{name}</TableCell>
                                         <TableCell align="left">{type}</TableCell>
+                                        <TableCell align="left">{description}</TableCell>
                                         <TableCell align="left">{beds} giường</TableCell>
                                         <TableCell align="left">{leftBeds} giường</TableCell>
                                         <TableCell align="right">
-                                            <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id)}>
+                                            <IconButton
+                                                size="large"
+                                                color="inherit"
+                                                onClick={(event) => handleOpenMenu(event, id, name, beds, type, description, leftBeds)}
+                                            >
                                                 <Iconify icon={'eva:more-vertical-fill'} />
                                             </IconButton>
                                         </TableCell>
@@ -280,15 +309,18 @@ const RequestRoomTable = () => {
                 <MenuItem onClick={handleCreateRequestRoom}>Đăng kí</MenuItem>
             </Popover>
 
-            <DetailViewModal detailViewOpen={detailViewOpen} onClose={() => setDetailViewOpen(false)} onSubmit={() => {}} />
+            <DetailViewModal
+                detailViewOpen={detailViewOpen}
+                onClose={() => setDetailViewOpen(false)}
+                onSubmit={handleCreateRequestRoom}
+                detailRoom={{ name, beds, type, description, leftBeds }}
+            />
             {/*<RequestRoomModal requestRoomOpen={requestRoomOpen} onClose={() => setRequestRoomOpen(false)} onSubmit={() => {}} />*/}
         </>
     );
 };
 
-const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
-    const handleSubmit = () => {};
-
+const DetailViewModal = ({ detailViewOpen, onClose, onSubmit, detailRoom }) => {
     return (
         <Dialog open={detailViewOpen}>
             <DialogTitle variant="h4" textAlign="center">
@@ -301,34 +333,19 @@ const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
                             <Card variant="outlined" sx={{ minWidth: 450 }}>
                                 <CardContent>
                                     <Typography mb={1.5} variant="h5" component="div">
-                                        Phòng kí túc xá: 401
+                                        Phòng kí túc xá: {detailRoom.name}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Loại phòng: Phòng dịch vụ
+                                        Loại phòng: {detailRoom.type}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Kiểu phòng: Nam
+                                        Số người tối đa: {detailRoom.beds}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Số người hiện tại: 5
+                                        Số người còn lại: {detailRoom.leftBeds}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Số người tối đa: 8
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Mô tả chi tiết: Phòng 6 bạn, có giường tầng, nhà vệ sinh khép kín
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Phí lưu trú 1 tháng: 160000
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Phí lưu trú 3 tháng: 200000
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary" gutterBottom>
-                                        Phí lưu trú 6 tháng: 240000
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        Trạng thái: Khả dụng
+                                        Mô tả chi tiết: {detailRoom.description}
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -338,7 +355,7 @@ const DetailViewModal = ({ detailViewOpen, onClose, onSubmit }) => {
             </DialogContent>
             <DialogActions sx={{ p: '1.25rem' }}>
                 <Button onClick={onClose}>Quay lại</Button>
-                <Button color="secondary" onClick={handleSubmit} variant="contained">
+                <Button color="secondary" onClick={onSubmit} variant="contained">
                     Đăng kí
                 </Button>
             </DialogActions>
