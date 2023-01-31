@@ -16,13 +16,13 @@ import {
     Tooltip
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { getBillList } from '../../redux/actions/BillActions';
+import { deleteBill, getBillList, updateBill } from '../../redux/actions/BillActions';
 
 let data = [
     {
         id: 1,
         name: 'Nguyễn Văn A',
-        status: 'false',
+        isPaid: 'false',
         mssv: '20190070',
         startDate: '2022-10-01T03:20:00.000Z',
         endDate: '2023-10-01T03:20:00.000Z',
@@ -55,7 +55,7 @@ const BillTable = () => {
                     mssv: item.User.studentCode,
                     startDate: item.startDate,
                     endDate: item.endDate,
-                    status: item.isPaid ? 'true' : 'false',
+                    isPaid: item.isPaid ? 'true' : 'false',
                     room: item.Room.name,
                     building: item.Room.Building.name,
                     priceRoom: 250000,
@@ -80,10 +80,20 @@ const BillTable = () => {
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         if (!Object.keys(validationErrors).length) {
             tableData[row.index] = values;
-            console.log(values);
-            // const { id, name, floors, address } = values;
-            // const floorNum = parseInt(floors.split(' ')[0], 10);
-            // dispatch(updateBuilding(id, { name: name, address: address, numberOfFloor: floorNum }));
+            const { id, priceRoom, priceElectric, priceInternet, priceWater, priceParking, isPaid } = values;
+            // console.log({ id, priceRoom, priceElectric, priceInternet, priceWater, priceParking, isPaid });
+            const isPaidBoolean = isPaid === 'true' ? true : false;
+            // console.log(isPaidBoolean);
+            dispatch(
+                updateBill(id, {
+                    priceRoom: priceRoom,
+                    priceElectric: priceElectric,
+                    priceInternet: priceInternet,
+                    priceWater: priceWater,
+                    priceParking: priceParking,
+                    isPaid: isPaidBoolean
+                })
+            );
             //send/receive api updates here, then refetch or update local table data for re-render
             setTableData([...tableData]);
             exitEditingMode(); //required to exit editing mode and close modal
@@ -96,11 +106,11 @@ const BillTable = () => {
 
     const handleDeleteRow = useCallback(
         (row) => {
-            if (!confirm(`Bạn có muốn xóa tòa nhà: ${row.getValue('name')}`)) {
+            if (!confirm(`Bạn có muốn xóa hóa đơn của: ${row.getValue('name')}`)) {
                 return;
             }
             const id = row.getValue('id');
-            // dispatch(deleteBuilding(id));
+            dispatch(deleteBill(id));
             tableData.splice(row.index, 1);
             setTableData([...tableData]);
         },
@@ -134,7 +144,7 @@ const BillTable = () => {
             size: 140
         },
         {
-            accessorKey: 'status',
+            accessorKey: 'isPaid',
             header: 'Trạng thái thanh toán',
             muiTableBodyCellEditTextFieldProps: {
                 select: true, //change to select for a dropdown

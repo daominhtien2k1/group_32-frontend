@@ -6,6 +6,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import customizationReducer from './reducers/customizationReducer';
 import { userLoginReducer } from './reducers/UserReducers';
 import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
+import {
+    roomCategoryListReducer,
+    createRoomCategoryListReducer,
+    updateRoomCategoryListReducer,
+    deleteRoomCategoryListReducer
+} from './reducers/RoomCategoryReducers.js';
 import { roomFromBuiIDListReducer } from './reducers/RoomReducers';
 import {
     createRequestRoomReducer,
@@ -14,7 +20,7 @@ import {
     updateRequestRoomStatusReducer
 } from './reducers/RequestRoomReducers';
 import { contractListReducer } from './reducers/ContractReducers';
-import { billListReducer } from './reducers/BillReducers';
+import { billListReducer, deleteBillReducer, updateBillReducer } from './reducers/BillReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 const reducer = combineReducers({
@@ -30,7 +36,13 @@ const reducer = combineReducers({
     requestRoomDelete: deleteRequestRoomReducer,
     requestRoomStatusUpdate: updateRequestRoomStatusReducer,
     contractList: contractListReducer,
-    billList: billListReducer
+    billList: billListReducer,
+    billUpdate: updateBillReducer,
+    billDelete: deleteBillReducer,
+    roomCategoryList: roomCategoryListReducer,
+    roomCategoryCreate: createRoomCategoryListReducer,
+    roomCategoryUpdate: updateRoomCategoryListReducer,
+    roomCategoryDelete: deleteRoomCategoryListReducer
 });
 
 const userInfoFromLocalStogare = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
