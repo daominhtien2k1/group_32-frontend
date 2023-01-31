@@ -7,6 +7,7 @@ import { gridSpacing } from '../../redux/constants/constant';
 import MaterialReactTable from 'material-react-table';
 import MainCard from '../../ui-component/cards/MainCard';
 import { detailRoom } from '../../redux/actions/RoomActions';
+import { getBillList } from '../../redux/actions/BillActions';
 
 let data = [
     {
@@ -16,8 +17,8 @@ let data = [
     },
     {
         stt: 2,
-        name: 'Đào Minh Tiến',
-        mssv: 20190070
+        name: 'Vũ Đình Tiến',
+        mssv: 20190071
     }
 ];
 
@@ -74,6 +75,7 @@ const RoomTracking = () => {
             // console.log(roomID);
             dispatch(detailRoom(roomID));
         }
+        dispatch(getBillList());
     }, [dispatch]);
 
     const [dataStudent, setDataStudent] = useState(data);
@@ -90,6 +92,9 @@ const RoomTracking = () => {
         }
     }, [room]);
 
+    const billList = useSelector((state) => state.billList);
+    let { bills } = billList;
+
     return (
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
@@ -99,17 +104,13 @@ const RoomTracking = () => {
             </Stack>
             <MainCard title="Ghi chú" sx={{ mb: 3 }}>
                 <Typography variant="body2" sx={{ color: 'error.main' }}>
-                    - Đóng tiền trọ theo từng gói đăng kí tháng, 7 ngày kể từ ngày đăng kí cuối (vd: 8/6/2023 - 14/6/2023)
+                    - Hạn duy trì phòng như theo hợp đồng
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'error.main' }}>
-                    - Hạn duy trì phòng là thời gian theo gói đăng kí kể từ ngày đầu tiên đăng kí thành công. Sinh viên chú ý nếu muốn gia
-                    hạn thì phải đăng kí tiếp đầu tháng tiếp theo (vd: 1/7/2023 - 7/7/2023)
+                    - Tiền phòng có thể trả theo nhiều đợt
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'error.main' }}>
-                    - Đóng các loại tiền khác như tiền trọ theo hàng tháng, vào tuần cuối của tháng (vd: 23/6/2023 - 30/6/2023)
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'error.main' }}>
-                    - Tiền phòng là đóng cá nhân, các loại tiền khác đóng chung theo phòng
+                    - Tiền điện/nước... có thể là cố định tùy theo hợp đồng/hoặc tính biến động cuối tháng
                 </Typography>
             </MainCard>
             <Grid container spacing={gridSpacing}>
@@ -165,13 +166,16 @@ const RoomTracking = () => {
                                             1. Phí lưu trú
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
-                                            - Phí internet: 120.000đ
+                                            - Tiền phòng: {bills != null ? `${bills?.data?.items[0].priceRoom} đ` : 'Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
-                                            - Phí tiền nước: 67.000/100m3 nước
+                                            - Phí tiền nước: {bills != null ? `${bills?.data?.items[0].priceWater} đ` : 'Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                                            - Phí tiền điện: 300.000/300kWh
+                                            - Phí tiền điện: {bills != null ? `${bills?.data?.items[0].priceElectric} đ` : 'Không có'}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
+                                            - Phí tiền internet: {bills != null ? `${bills?.data?.items[0].priceInternet} đ` : 'Không có'}
                                         </Typography>
                                     </CardContent>
                                 </Card>
@@ -181,19 +185,23 @@ const RoomTracking = () => {
                                             2. Phí giữ xe tháng
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
-                                            - Xe máy: 50000đ
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                                            - Xe đạp: Không có
+                                            - Tiền xe:{' '}
+                                            {bills != null
+                                                ? `${bills?.data?.items[0].isPaid}`
+                                                    ? 'Không có'
+                                                    : bills?.data?.items[0].isPaid
+                                                : 'Không có'}
                                         </Typography>
                                     </CardContent>
                                 </Card>
                                 <Divider light sx={{ mt: 2 }} />
                                 <Typography sx={{ fontSize: 18, mt: 2 }} color="text.secondary" gutterBottom>
-                                    Tổng cộng tháng này: 500.000đ
-                                </Typography>
-                                <Typography sx={{ fontSize: 18, mt: 2 }} color="text.secondary" gutterBottom>
-                                    Trạng thái: Chưa thanh toán
+                                    Trạng thái:{' '}
+                                    {bills != null
+                                        ? `${bills?.data?.items[0].isPaid}`
+                                            ? 'Chưa thanh toán'
+                                            : 'Đã thanh toán'
+                                        : 'Chưa thanh toán'}
                                 </Typography>
                             </CardContent>
                         </Card>
