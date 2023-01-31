@@ -45,12 +45,12 @@ const RoomTable = () => {
                     name: room.name,
                     buildingId: room.buildingId,
                     roomCategoryId: room.roomCategoryId,
-                    description: room.RoomCategory.description,
-                    capacity: room.RoomCategory.capacity,
-                    numberCurrent: room.Users.length,
-                    priceRoom: room.RoomCategory.priceRoom,
-                    buildingName: room.Building.name,
-                    address: room.Building.address
+                    description: room?.RoomCategory?.description ?? '',
+                    capacity: room?.RoomCategory?.capacity ?? 0,
+                    numberCurrent: room?.Users?.length ?? 0,
+                    priceRoom: room?.RoomCategory?.priceRoom ?? 0,
+                    buildingName: room?.Building?.name ?? 0,
+                    address: room?.Building?.address ?? ''
                 };
             });
         }
