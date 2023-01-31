@@ -55,7 +55,19 @@ const Dashboard = () => {
         //     </Grid>
         // </Grid>
         <div sx={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={logoktx} alt={'Hệ thống quản lý kí túc xá'} />
+            <img
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    translate: '-50% -50%',
+                    margin: 'auto',
+                    width: '60vw',
+                    height: '80vh'
+                }}
+                src={logoktx}
+                alt={'Hệ thống quản lý kí túc xá'}
+            />
         </div>
     );
 };
