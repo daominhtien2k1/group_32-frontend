@@ -118,7 +118,7 @@ const RequestRoomTable = () => {
     const [description, setDescription] = useState('Có điều hòa, bình nóng lạnh');
     const [leftBeds, setLeftBeds] = useState(10);
     const handleCreateRequestRoom = () => {
-        // console.log(id);
+        console.log(id);
         setDetailViewOpen(false);
         dispatch(createRequest({ roomId: id, type: 'room' }));
     };
