@@ -33,7 +33,8 @@ const other = {
             type: 'item',
             url: '/manage-building',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-room-type',
@@ -41,7 +42,8 @@ const other = {
             type: 'item',
             url: '/manage-room-type',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-officer',
@@ -49,7 +51,8 @@ const other = {
             type: 'item',
             url: '/manage-officer',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-bill',
@@ -57,7 +60,8 @@ const other = {
             type: 'item',
             url: '/manage-bill',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-contract',
@@ -65,7 +69,8 @@ const other = {
             type: 'item',
             url: '/manage-contract',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-request',
@@ -73,7 +78,8 @@ const other = {
             type: 'item',
             url: '/manage-request',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'manage-notification',
@@ -81,7 +87,8 @@ const other = {
             type: 'item',
             url: '/manage-notification',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin'
         },
         {
             id: 'request-room',
@@ -89,7 +96,8 @@ const other = {
             type: 'item',
             url: '/request-room',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'request-list',
@@ -97,7 +105,8 @@ const other = {
             type: 'item',
             url: '/request-list',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'room-tracking',
@@ -105,7 +114,8 @@ const other = {
             type: 'item',
             url: '/room-tracking',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'bill-tracking',
@@ -113,7 +123,8 @@ const other = {
             type: 'item',
             url: '/bill-tracking',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'officer',
@@ -121,7 +132,8 @@ const other = {
             type: 'item',
             url: '/officer',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'complaints',
@@ -129,7 +141,8 @@ const other = {
             type: 'item',
             url: '/complaints',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'student'
         },
         {
             id: 'profile',
@@ -137,7 +150,8 @@ const other = {
             type: 'item',
             url: '/profile',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false
+            breadcrumbs: false,
+            role: 'admin_student'
         }
     ]
 };

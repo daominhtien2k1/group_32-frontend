@@ -63,7 +63,10 @@ const NavItem = ({ item, level }) => {
         // eslint-disable-next-line
     }, []);
 
-    return (
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    const { role } = userInfo;
+    return item.role === role || item.role === 'admin_student' ? (
         <ListItemButton
             {...listItemProps}
             disabled={item.disabled}
@@ -103,6 +106,8 @@ const NavItem = ({ item, level }) => {
                 />
             )}
         </ListItemButton>
+    ) : (
+        <></>
     );
 };
 
