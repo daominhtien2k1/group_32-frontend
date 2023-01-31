@@ -37,6 +37,15 @@ const other = {
             role: 'admin'
         },
         {
+            id: 'manage-room',
+            title: 'Quản lý phòng',
+            type: 'item',
+            url: '/manage-room',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false,
+            role: 'admin'
+        },
+        {
             id: 'manage-room-type',
             title: 'Quản lý loại phòng',
             type: 'item',

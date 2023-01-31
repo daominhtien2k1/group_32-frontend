@@ -21,6 +21,7 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const ManageBuilding = Loadable(lazy(() => import('views/manage-building')));
+const ManageRoom = Loadable(lazy(() => import('views/manage-room')));
 const ManageRoomType = Loadable(lazy(() => import('views/manage-room-type')));
 const RequestRoom = Loadable(lazy(() => import('views/request-room')));
 const Officer = Loadable(lazy(() => import('views/officer')));
@@ -92,6 +93,10 @@ const MainRoutes = (isAllowed) => ({
         {
             path: 'manage-building',
             element: <ManageBuilding />
+        },
+        {
+            path: 'manage-room',
+            element: <ManageRoom />
         },
         {
             path: 'manage-request',

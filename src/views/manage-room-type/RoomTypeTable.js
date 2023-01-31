@@ -85,7 +85,7 @@ const RoomTypeTable = () => {
             dispatch(deleteRoomCategory(id));
             tableData.splice(row.index, 1);
             setTableData([...tableData]);
-            deleteRoomCategory;
+            //deleteRoomCategory;
         },
         [tableData]
     );
