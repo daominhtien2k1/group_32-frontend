@@ -27,11 +27,34 @@ import Label from '../../ui-component/label';
 // sections
 
 // mock
-import officerList from '../../mock/Officier';
+// import officerList from '../../mock/Officier';
 import OfficerListToolbar from '../../sections/officer/OfficerListToolbar';
 import OfficerListHead from '../../sections/officer/OfficerListHead';
 
 // ----------------------------------------------------------------------
+let officerList = [
+    {
+        id: '9s41rp',
+        avatarUrl: `avatar_1.jpg`,
+        name: 'Nguyễn Hữu Khôi',
+        email: 'khoi.nguyenhuu@hust.edu.vn',
+        role: 'Giám đốc Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        avatarUrl: `avatar_1.jpg`,
+        name: 'Vũ Văn Trường',
+        email: 'truong.vuvan@hust.edu.vn',
+        role: 'Phó Giám đốc Trung tâm'
+    },
+    {
+        id: '9s41rp',
+        avatarUrl: `avatar_3.jpg`,
+        name: 'Vũ Thanh Nga',
+        email: 'nga.vuthanh@hust.edu.vn',
+        role: 'Cán bộ Văn phòng Trung tâm'
+    }
+];
 
 const TABLE_HEAD = [
     { id: 'name', label: 'Họ và tên' },
