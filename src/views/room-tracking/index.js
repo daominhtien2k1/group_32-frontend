@@ -179,17 +179,17 @@ const RoomTracking = () => {
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
                                             - Tiền phòng:
                                             {bills != null && dataStudent.length !== 0
-                                                ? `${bills?.data?.items[0].priceRoom} đ`
+                                                ? `${bills?.data?.items[0]?.priceRoom} đ`
                                                 : ' Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
-                                            - Phí tiền nước: {bills != null ? `${bills?.data?.items[0].priceWater} đ` : 'Không có'}
+                                            - Phí tiền nước: {bills != null ? `${bills?.data?.items[0]?.priceWater} đ` : 'Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                                            - Phí tiền điện: {bills != null ? `${bills?.data?.items[0].priceElectric} đ` : 'Không có'}
+                                            - Phí tiền điện: {bills != null ? `${bills?.data?.items[0]?.priceElectric} đ` : 'Không có'}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                                            - Phí tiền internet: {bills != null ? `${bills?.data?.items[0].priceInternet} đ` : 'Không có'}
+                                            - Phí tiền internet: {bills != null ? `${bills?.data?.items[0]?.priceInternet} đ` : 'Không có'}
                                         </Typography>
                                     </CardContent>
                                 </Card>
@@ -201,9 +201,9 @@ const RoomTracking = () => {
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
                                             - Tiền xe:{' '}
                                             {bills != null && dataStudent.length !== 0
-                                                ? `${bills?.data?.items[0].isPaid}`
+                                                ? `${bills?.data?.items?.[0]?.isPaid}`
                                                     ? 'Không có'
-                                                    : bills?.data?.items[0].isPaid
+                                                    : bills?.data?.items?.[0]?.isPaid
                                                 : 'Không có'}
                                         </Typography>
                                     </CardContent>
@@ -212,7 +212,7 @@ const RoomTracking = () => {
                                 <Typography sx={{ fontSize: 18, mt: 2 }} color="text.secondary" gutterBottom>
                                     Trạng thái:{' '}
                                     {bills != null && dataStudent.length !== 0
-                                        ? `${bills?.data?.items[0].isPaid}`
+                                        ? `${bills?.data?.items[0]?.isPaid}`
                                             ? 'Chưa thanh toán'
                                             : 'Đã thanh toán'
                                         : 'Chưa thanh toán'}
