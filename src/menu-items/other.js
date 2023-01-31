@@ -116,6 +116,14 @@ const other = {
             breadcrumbs: false
         },
         {
+            id: 'complaints',
+            title: 'Hỗ trợ, Phản ánh',
+            type: 'item',
+            url: '/complaints',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
             id: 'profile',
             title: 'Thông tin cá nhân',
             type: 'item',
