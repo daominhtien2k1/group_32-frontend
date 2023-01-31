@@ -108,6 +108,14 @@ const other = {
             breadcrumbs: false
         },
         {
+            id: 'bill-tracking',
+            title: 'Lịch sử hóa đơn',
+            type: 'item',
+            url: '/bill-tracking',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false
+        },
+        {
             id: 'officer',
             title: 'Cán bộ',
             type: 'item',
