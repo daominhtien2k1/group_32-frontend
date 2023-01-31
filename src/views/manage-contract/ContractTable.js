@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { createBuilding, deleteBuilding, getBuildingList, updateBuilding } from '../../redux/actions/BuildingActions';
-import { getContractList } from '../../redux/actions/ContractActions';
+import { getContractList, updateContract, updateContractStatus } from '../../redux/actions/ContractActions';
 
 let data = [
     {
@@ -36,7 +36,7 @@ let data = [
         priceParking: 20000
     }
 ];
-const statuses = ['pending', 'inuse'];
+const statuses = ['pending', 'inuse', 'canceled'];
 
 const ContractTable = () => {
     const dispatch = useDispatch();
@@ -59,11 +59,11 @@ const ContractTable = () => {
                     room: item.Room.name,
                     building: item.Room.Building.name,
                     status: item.status,
-                    priceRoom: 250000,
-                    priceInternet: 30000,
-                    priceElectric: 200000,
-                    priceWater: 20000,
-                    priceParking: 20000
+                    priceRoom: item.priceRoom,
+                    priceInternet: item.priceInternet,
+                    priceElectric: item.priceElectric,
+                    priceWater: item.priceWater,
+                    priceParking: item.priceParking
                 };
             });
         }
@@ -82,8 +82,20 @@ const ContractTable = () => {
         if (!Object.keys(validationErrors).length) {
             tableData[row.index] = values;
             console.log(values);
-            // const { id, name, floors, address } = values;
-            // const floorNum = parseInt(floors.split(' ')[0], 10);
+            const { id, priceRoom, priceElectric, priceInternet, priceWater, priceParking, startDate, endDate } = values;
+            dispatch(
+                updateContract(id, {
+                    priceRoom: priceRoom,
+                    priceElectric: priceElectric,
+                    priceInternet: priceInternet,
+                    priceWater: priceWater,
+                    priceParking: priceParking,
+                    startDate: startDate,
+                    endDate: endDate
+                })
+            );
+            const { status } = values;
+            dispatch(updateContractStatus(id, { status: status }));
             // dispatch(updateBuilding(id, { name: name, address: address, numberOfFloor: floorNum }));
             //send/receive api updates here, then refetch or update local table data for re-render
             setTableData([...tableData]);

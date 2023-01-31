@@ -19,7 +19,7 @@ import {
     requestRoomListReducer,
     updateRequestRoomStatusReducer
 } from './reducers/RequestRoomReducers';
-import { contractListReducer } from './reducers/ContractReducers';
+import { contractListReducer, updateContractReducer, updateContractStatusReducer } from './reducers/ContractReducers';
 import { billListReducer, deleteBillReducer, updateBillReducer } from './reducers/BillReducers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
@@ -36,6 +36,8 @@ const reducer = combineReducers({
     requestRoomDelete: deleteRequestRoomReducer,
     requestRoomStatusUpdate: updateRequestRoomStatusReducer,
     contractList: contractListReducer,
+    contractUpdate: updateContractReducer,
+    contractUpdateStatus: updateContractStatusReducer,
     billList: billListReducer,
     billUpdate: updateBillReducer,
     billDelete: deleteBillReducer,
