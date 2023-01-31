@@ -1,5 +1,13 @@
 //login
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/UserConstants';
+import {
+    USER_GET_PROFILE_FAIL,
+    USER_GET_PROFILE_REQUEST,
+    USER_GET_PROFILE_SUCCESS,
+    USER_LOGIN_FAIL,
+    USER_LOGIN_REQUEST,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT
+} from '../constants/UserConstants';
 import {
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
@@ -33,6 +41,19 @@ export const userLoginReducer = (state = initUserInfo, action) => {
         case USER_UPDATE_PROFILE_FAIL:
             console.log('check state: run failed');
             return { ...state, loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const profileReducer = (state = initUserInfo, action) => {
+    switch (action.type) {
+        case USER_GET_PROFILE_REQUEST:
+            return { loading: true, userInfo: null };
+        case USER_GET_PROFILE_SUCCESS:
+            return { loading: false, success: true, userInfo: action.payload };
+        case USER_GET_PROFILE_FAIL:
+            return { loading: false, error: action.payload, userInfo: null };
         default:
             return state;
     }

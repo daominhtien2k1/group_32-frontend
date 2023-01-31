@@ -8,6 +8,7 @@ import MaterialReactTable from 'material-react-table';
 import MainCard from '../../ui-component/cards/MainCard';
 import { detailRoom } from '../../redux/actions/RoomActions';
 import { getBillList } from '../../redux/actions/BillActions';
+import { getProfile } from '../../redux/actions/UserActions';
 
 let data = [
     // {
@@ -69,14 +70,24 @@ const RoomTracking = () => {
     const { loading, error, room } = roomDetail;
 
     const userLogin = useSelector((state) => state.userLogin);
-    const [roomID, setRoomID] = useState(userLogin.userInfo.roomId);
+    const profile = useSelector((state) => state.profile);
+    // const [roomID, setRoomID] = useState(userLogin.userInfo.roomId);
+    const { userInfo } = profile;
+    const [roomID, setRoomID] = useState(userInfo?.data.roomId);
     useEffect(() => {
-        if (roomID !== 0 && roomID !== null) {
+        dispatch(getProfile());
+        dispatch(getBillList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        console.log(roomID, userInfo);
+        // nếu là mảng thì dính đòn chạy vô hạn ([]!= []), nhưng là số int nên ko bị lỗi
+        setRoomID(userInfo?.data.roomId);
+        if (roomID !== 0 && roomID !== null && userInfo != null) {
             // console.log(roomID);
             dispatch(detailRoom(roomID));
         }
-        dispatch(getBillList());
-    }, [dispatch]);
+    }, [roomID, userInfo]);
 
     const [dataStudent, setDataStudent] = useState(data);
     useEffect(() => {
@@ -189,7 +200,7 @@ const RoomTracking = () => {
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, mb: 1 }} color="text.secondary" gutterBottom>
                                             - Tiền xe:{' '}
-                                            {bills != null
+                                            {bills != null && dataStudent.length !== 0
                                                 ? `${bills?.data?.items[0].isPaid}`
                                                     ? 'Không có'
                                                     : bills?.data?.items[0].isPaid
@@ -200,7 +211,7 @@ const RoomTracking = () => {
                                 <Divider light sx={{ mt: 2 }} />
                                 <Typography sx={{ fontSize: 18, mt: 2 }} color="text.secondary" gutterBottom>
                                     Trạng thái:{' '}
-                                    {bills != null
+                                    {bills != null && dataStudent.length !== 0
                                         ? `${bills?.data?.items[0].isPaid}`
                                             ? 'Chưa thanh toán'
                                             : 'Đã thanh toán'

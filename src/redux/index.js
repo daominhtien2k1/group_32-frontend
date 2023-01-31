@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 // reducer import
 import customizationReducer from './reducers/customizationReducer';
-import { userLoginReducer } from './reducers/UserReducers';
+import { profileReducer, userLoginReducer } from './reducers/UserReducers';
 import { buildingListReducer, createBuildingReducer, deleteBuildingReducer, updateBuildingReducer } from './reducers/BuildingReducers';
 import {
     roomCategoryListReducer,
@@ -26,6 +26,7 @@ import { billListReducer, deleteBillReducer, updateBillReducer } from './reducer
 const reducer = combineReducers({
     customization: customizationReducer,
     userLogin: userLoginReducer,
+    profile: profileReducer,
     buildingList: buildingListReducer,
     buildingCreate: createBuildingReducer,
     buildingUpdate: updateBuildingReducer,

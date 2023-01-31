@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/UserConstants';
+import {
+    USER_GET_PROFILE_FAIL,
+    USER_GET_PROFILE_REQUEST,
+    USER_GET_PROFILE_SUCCESS,
+    USER_LOGIN_FAIL,
+    USER_LOGIN_REQUEST,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT
+} from '../constants/UserConstants';
 import {
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
@@ -9,6 +17,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { backend_url } from '../backend_url';
+
 // chung cho cả admin
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -32,6 +41,7 @@ export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo');
     dispatch({ type: USER_LOGOUT });
 };
+
 export const updateProfile = (profile) => async (dispatch, getState) => {
     try {
         dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
@@ -90,6 +100,28 @@ export const updateProfile = (profile) => async (dispatch, getState) => {
             pauseOnHover: false,
             draggable: true,
             progress: undefined
+        });
+    }
+};
+
+export const getProfile = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_GET_PROFILE_REQUEST });
+        const {
+            userLogin: { userInfo }
+        } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+        const profileResult = await axios.get(`${backend_url}/api/profile`, config);
+        dispatch({ type: USER_GET_PROFILE_SUCCESS, payload: profileResult.data });
+    } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({
+            type: USER_GET_PROFILE_FAIL,
+            payload: message
         });
     }
 };
