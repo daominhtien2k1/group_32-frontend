@@ -44,7 +44,7 @@ const RoomTable = () => {
                     id: room?.id,
                     name: room?.name,
                     buildingId: room?.buildingId,
-                    roomCategoryId: room?.roomCategoryId,
+                    roomCategoryId: room.roomCategoryId,
                     description: room?.RoomCategory?.description ?? '',
                     capacity: room?.RoomCategory?.capacity ?? 0,
                     numberCurrent: room?.Users?.length ?? 0,

@@ -51,19 +51,19 @@ const ContractTable = () => {
         if (contracts.length !== 0) {
             data = contracts.data.items.map((item) => {
                 return {
-                    id: item.id,
-                    name: item.User.name,
-                    mssv: item.User.studentCode,
-                    startDate: item.startDate,
-                    endDate: item.endDate,
-                    room: item.Room.name,
-                    building: item.Room.Building.name,
-                    status: item.status,
-                    priceRoom: item.priceRoom,
-                    priceInternet: item.priceInternet,
-                    priceElectric: item.priceElectric,
-                    priceWater: item.priceWater,
-                    priceParking: item.priceParking
+                    id: item?.id,
+                    name: item?.User?.name,
+                    mssv: item?.User?.studentCode,
+                    startDate: item?.startDate,
+                    endDate: item?.endDate,
+                    room: item?.Room?.name,
+                    building: item?.Room?.Building?.name,
+                    status: item?.status,
+                    priceRoom: item?.priceRoom,
+                    priceInternet: item?.priceInternet,
+                    priceElectric: item?.priceElectric,
+                    priceWater: item?.priceWater,
+                    priceParking: item?.priceParking
                 };
             });
         }

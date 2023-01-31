@@ -69,12 +69,12 @@ const Complaints = () => {
         if (requests.length !== 0) {
             data = requests.data.items.map((item) => {
                 return {
-                    name: item.User.name,
-                    mssv: item.User.studentCode,
-                    date: item.createdAt,
-                    status: item.status,
-                    room: item.Room.name,
-                    building: item.Room.Building.name
+                    name: item?.User?.name,
+                    mssv: item?.User?.studentCode,
+                    date: item?.createdAt,
+                    status: item?.status,
+                    room: item?.Room?.name,
+                    building: item?.Room?.Building?.name
                 };
             });
         }

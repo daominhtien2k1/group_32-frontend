@@ -147,20 +147,20 @@ const RequestList = () => {
         if (requests.length !== 0) {
             const dataMap = requests.data.items.map((item) => {
                 return {
-                    id: item.id,
-                    name: item.User.name,
-                    mssv: item.User.studentCode,
-                    date: item.createdAt,
-                    status: item.status,
-                    room: item.Room.name,
-                    building: item.Room.Building.name
+                    id: item?.id,
+                    name: item?.User?.name,
+                    mssv: item?.User?.studentCode,
+                    date: item?.createdAt,
+                    status: item?.status,
+                    room: item?.Room?.name,
+                    building: item?.Room?.Building?.name
                 };
             });
             setDataRequestRoom(dataMap);
         }
     }, [requests]);
     // bị lỗi chậm 1 đợt // đã fix lỗi này
-    // console.log(data);
+    // console?.log(data);
     return (
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>

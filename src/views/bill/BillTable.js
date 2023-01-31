@@ -50,14 +50,14 @@ const BillTable = () => {
         if (bills.length !== 0) {
             data = bills.data.items.map((item) => {
                 return {
-                    id: item.id,
-                    name: item.User.name,
-                    mssv: item.User.studentCode,
-                    startDate: item.startDate,
-                    endDate: item.endDate,
-                    isPaid: item.isPaid ? 'true' : 'false',
-                    room: item.Room.name,
-                    building: item.Room.Building.name,
+                    id: item?.id,
+                    name: item?.User?.name,
+                    mssv: item?.User?.studentCode,
+                    startDate: item?.startDate,
+                    endDate: item?.endDate,
+                    isPaid: item?.isPaid ? 'true' : 'false',
+                    room: item?.Room?.name,
+                    building: item?.Room?.Building?.name,
                     priceRoom: 250000,
                     priceInternet: 30000,
                     priceElectric: 200000,

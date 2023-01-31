@@ -47,13 +47,13 @@ const RequestTable = () => {
         if (requests.length !== 0) {
             data = requests.data.items.map((item) => {
                 return {
-                    id: item.id,
-                    name: item.User.name,
-                    mssv: item.User.studentCode,
-                    date: item.createdAt,
-                    status: item.status,
-                    room: item.Room.name,
-                    building: item.Room.Building.name
+                    id: item?.id,
+                    name: item?.User?.name,
+                    mssv: item?.User?.studentCode,
+                    date: item?.createdAt,
+                    status: item?.status,
+                    room: item?.Room?.name,
+                    building: item?.Room?.Building?.name
                 };
             });
         }
