@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import MaterialReactTable from 'material-react-table';
 import MainCard from '../../ui-component/cards/MainCard';
 import { Typography } from '@mui/material';
@@ -63,22 +65,30 @@ export const RoomTypeTable = () => {
         {
             accessorKey: 'price1',
             header: 'Phí lưu trú (1 tháng)'
-        },
-        {
-            accessorKey: 'price3',
-            header: 'Phí lưu trú (3 tháng)'
-        },
-        {
-            accessorKey: 'price6',
-            header: 'Phí lưu trú (6 tháng)'
         }
     ];
 
+    const roomCategoryList = useSelector((state) => state.roomCategoryList);
+    const { roomsCategory } = roomCategoryList;
+    const [dataRoomsCategory, setDataRoomsCategory] = useState(data);
+    useEffect(() => {
+        if (roomsCategory.length !== 0) {
+            const dataMap = roomsCategory.map((roomCategory) => {
+                return {
+                    type: roomCategory.name,
+                    beds: roomCategory.capacity,
+                    description: roomCategory.description,
+                    price1: roomCategory.priceRoom
+                };
+            });
+            setDataRoomsCategory(dataMap);
+        }
+    }, [roomsCategory]);
     return (
         <>
             <MaterialReactTable
                 columns={columns}
-                data={data}
+                data={dataRoomsCategory}
                 enableColumnActions={false}
                 enableColumnFilters={false}
                 enablePagination={false}

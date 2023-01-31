@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import { gridSpacing } from '../../redux/constants/constant';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { getBuildingList } from '../../redux/actions/BuildingActions';
+import { getRoomCategoryList } from '../../redux/actions/RoomCategoryActions';
 
 const MenuProps = {
     PaperProps: {
@@ -30,8 +31,10 @@ const RequestRoom = () => {
     const dispatch = useDispatch();
     const buildingList = useSelector((state) => state.buildingList);
     let { loading, error, buildings } = buildingList;
+
     useEffect(() => {
         dispatch(getBuildingList());
+        dispatch(getRoomCategoryList());
     }, [dispatch]);
 
     const [dataBuildingIDlist, setDataBuildingIDlist] = useState(buildingIDList);

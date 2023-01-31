@@ -92,13 +92,14 @@ const RequestRoomTable = () => {
     useEffect(() => {
         if (rooms.length !== 0) {
             const ROOMLISTDATA = rooms.data.items.map((item) => {
+                const leftBedsData = item.RoomCategory.capacity - item.Users.length;
                 return {
                     id: item.id,
                     name: item.name,
                     type: item.RoomCategory.name,
                     description: item.RoomCategory.description,
                     beds: `${item.RoomCategory.capacity}`,
-                    leftBeds: `${item.RoomCategory.capacity}/${item.RoomCategory.capacity}`
+                    leftBeds: `${leftBedsData}/${item.RoomCategory.capacity}`
                 };
             });
             SETROOMLIST(ROOMLISTDATA);
