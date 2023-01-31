@@ -12,7 +12,7 @@ import {
     updateRoomCategoryListReducer,
     deleteRoomCategoryListReducer
 } from './reducers/RoomCategoryReducers.js';
-import { roomFromBuiIDListReducer } from './reducers/RoomReducers';
+import { detailRoomReducer, roomFromBuiIDListReducer } from './reducers/RoomReducers';
 import {
     createRequestRoomReducer,
     deleteRequestRoomReducer,
@@ -31,6 +31,7 @@ const reducer = combineReducers({
     buildingUpdate: updateBuildingReducer,
     buildingDelete: deleteBuildingReducer,
     roomFromBuiIDList: roomFromBuiIDListReducer,
+    roomDetail: detailRoomReducer,
     requestRoomCreate: createRequestRoomReducer,
     requestRoomList: requestRoomListReducer,
     requestRoomDelete: deleteRequestRoomReducer,

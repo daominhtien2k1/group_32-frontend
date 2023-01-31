@@ -142,9 +142,10 @@ const RequestList = () => {
         dispatch(getRequestList());
     }, [dispatch]);
 
+    const [dataRequestRoom, setDataRequestRoom] = useState(data);
     useEffect(() => {
         if (requests.length !== 0) {
-            data = requests.data.items.map((item) => {
+            const dataMap = requests.data.items.map((item) => {
                 return {
                     id: item.id,
                     name: item.User.name,
@@ -155,10 +156,11 @@ const RequestList = () => {
                     building: item.Room.Building.name
                 };
             });
+            setDataRequestRoom(dataMap);
         }
     }, [requests]);
-    // bị lỗi chậm 1 đợt
-    console.log(data);
+    // bị lỗi chậm 1 đợt // đã fix lỗi này
+    // console.log(data);
     return (
         <>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
@@ -166,7 +168,7 @@ const RequestList = () => {
                     DANH SÁCH LỊCH SỬ ĐĂNG KÍ PHÒNG
                 </Typography>
             </Stack>
-            <RequestListTable data={data} />
+            <RequestListTable data={dataRequestRoom} />
         </>
     );
 };
